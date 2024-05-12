@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import '../../../node_modules/swiper/swiper-bundle.min.css';
+import '../../node_modules/swiper/swiper-bundle.min.css';
 
-import '../../../node_modules/swiper/modules/navigation.min.css';
-import '../../../node_modules/swiper/modules/pagination.min.css';
+import '../../node_modules/swiper/modules/navigation.min.css';
+import '../../node_modules/swiper/modules/pagination.min.css';
 
-import  Navigation from '../../../node_modules/swiper/modules/navigation.mjs';
-import Pagination from '../../../node_modules/swiper/modules/pagination.mjs';
+import  Navigation from '../../node_modules/swiper/modules/navigation.mjs';
+import Pagination from '../../node_modules/swiper/modules/pagination.mjs';
 
 // import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 

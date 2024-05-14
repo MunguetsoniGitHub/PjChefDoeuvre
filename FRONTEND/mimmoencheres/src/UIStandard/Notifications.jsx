@@ -7,7 +7,7 @@ const Notifications = () => {
 
     return(
 
-        <div>
+        <div className=" flex flex-col h-screen bg-gray-100">
             <p> Notifications</p>
         </div>
     )

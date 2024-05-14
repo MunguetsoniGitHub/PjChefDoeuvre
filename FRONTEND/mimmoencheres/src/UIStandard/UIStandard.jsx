@@ -13,9 +13,9 @@ const UIStandard = () => {
  
 return (
     
-    <div>
-
-       <nav className="flex justify-between items-center bg-white p-4 text-black  shadow-lg">
+    <div className="w-screen h-max flex flex-col">
+      <header className="relative top-0 left-0 h-full w-screen">
+       <nav className="w-screen fixed top-0 left-0 flex justify-between items-center bg-white p-4 text-black  shadow-lg">
         <span className="text-lg">MimmoEnchères</span>
         <div className="hidden md:flex space-x-4">
             <NavLink to="/" activeClassName="active" className="hover:text-red-500">Accueil</NavLink>
@@ -26,8 +26,9 @@ return (
         </div>
         <button >Déconnexion</button>
       </nav>
+      </header>
     
-      <Outlet /> {/* Le contenu de la page sera affiché ici en fonction du routage */}
+      <Outlet className=" p-50" /> {/* Le contenu de la page sera affiché ici en fonction du routage */}
       <style>
         {`
           .active {

@@ -10,7 +10,9 @@ const SignUpPage = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const response = await axios.post('http://localhost:3000/register', formData);
+      const response = await axios.post('http://localhost:3000/register', formData, {
+        withCredentials: true, // Activer les credentials pour CORS)
+    });
       console.log(response.data);
       // Rediriger ou afficher un message de succès
     } catch (error) {

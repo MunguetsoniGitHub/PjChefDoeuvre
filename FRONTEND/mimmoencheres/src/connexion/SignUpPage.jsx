@@ -20,7 +20,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="flex max-w-full max-h-full">
+    <div className="flex w-screen h-screen max-h-full bg-white">
       <div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
         <h2 className="text-2xl mb-4">Créer un compte</h2>
         <form onSubmit={handleSubmit(onSubmit)}>

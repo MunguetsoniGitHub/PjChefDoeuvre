@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import ReactDOM from "react-dom/client";
-import { BrowserRouter , Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import React from 'react';
 
 import SignUpPage from './connexion/SignUpPage.jsx'

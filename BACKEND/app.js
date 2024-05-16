@@ -2,6 +2,7 @@
 
 // Importation des modules
 const express = require('express');
+const cors = require('cors');
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 // const annonceModel = require('./models/annonceModel');
 const annonceRoutes = require('./routes/annonceRoutes');
@@ -17,6 +18,9 @@ const app = express();
 
 // Middleware pour traiter les données au format JSON
 app.use(express.json());
+
+// Autoriser les requêtes CORS de tous les domaines (à adapter selon vos besoins)
+app.use(cors());
 
 // Montage des routes "Utilisateur"
 app.use('/utilisateurs', utilisateurRoutes);

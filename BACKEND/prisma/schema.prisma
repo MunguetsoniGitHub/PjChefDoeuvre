@@ -18,10 +18,12 @@ datasource db {
 model Utilisateur {
   id           Int       @id @default(autoincrement())
   nom          String
+  postnom          String
+  prenom          String
   email        String    @unique
   motDePasse   String
   adresse      String
-  numeroTel    String
+  numeroTel    Int
   typeCompte   String
   annonces     Annonce[]
   offres       Offre[]

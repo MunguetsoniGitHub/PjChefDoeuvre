@@ -1,15 +1,17 @@
 
-// import Accueil from "/Accueil.jsx"
-// import Encheres from "/Encheres.jsx";
-// import Notifications from "/Notifications.jsx";
-// import Compte from "/Compte.jsx";
-// import Apropos from "/Apropos.jsx";
 
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
+import { useAuth } from '../hooks/useAuth';
+
 const UIStandard = () => {
   
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
  
 return (
     
@@ -24,7 +26,7 @@ return (
             <NavLink to="/compte" activeClassName="active" className="hover:text-red-500">Compte</NavLink>
             <NavLink to="/apropos" activeClassName="active" className="hover:text-red-500">A propos</NavLink>
         </div>
-        <button >Déconnexion</button>
+        <button onClick={handleLogout}>Déconnexion</button>
       </nav>
       </header>
     

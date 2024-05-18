@@ -15,6 +15,11 @@ datasource db {
 
 // Déclaration des modèles
 
+enum Role {
+  UTILISATEUR_STANDARD
+  ADMINISTRATEUR
+}
+
 model Utilisateur {
   id           Int       @id @default(autoincrement())
   nom          String
@@ -24,7 +29,8 @@ model Utilisateur {
   motDePasse   String
   adresse      String
   numeroTel    String
-  typeCompte   String
+  dateNaissance DateTime
+  role                Role               @default(UTILISATEUR_STANDARD)
   annonces     Annonce[]
   offres       Offre[]
   notifications Notification[]

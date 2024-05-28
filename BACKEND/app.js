@@ -3,6 +3,13 @@
 // Importation des modules
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
+require('dotenv').config();
+
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+
+
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 // const annonceModel = require('./models/annonceModel');
 const annonceRoutes = require('./routes/annonceRoutes');
@@ -20,7 +27,15 @@ const app = express();
 app.use(express.json());
 
 // Autoriser les requêtes CORS de tous les domaines (à adapter selon vos besoins)
-app.use(cors());
+// app.use(cors());
+
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 // Montage des routes "Utilisateur"
 app.use('/utilisateurs', utilisateurRoutes);

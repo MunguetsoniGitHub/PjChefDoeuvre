@@ -8,12 +8,23 @@ import { Link } from 'react-router-dom';
 const SignUpPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (data) => {
+
+    if (data.motDePasse !== data.confirmationMotDePasse) {
+      alert("Les mots de passe ne correspondent pas.");
+      return;
+    }
+  // Supprimer confirmationMotDePasse avant d'envoyer les données au backend
+  const { confirmationMotDePasse, ...userData } = data;
+
+    // const dateNaissance = new Date(data.dateNaissance).toISOString();
+
     try {
-      const response = await axios.post('http://localhost:3000/register', formData, {
+      console.log('Submitting data:', data);
+      const response = await axios.post('http://localhost:3000/utilisateurs/register', userData, {
         withCredentials: true, // Activer les credentials pour CORS)
     });
-      console.log(response.data);
+      console.log('Utilisateur créé:', response.data);
       // Rediriger ou afficher un message de succès
     } catch (error) {
       console.error(error.message);
@@ -43,8 +54,12 @@ const SignUpPage = () => {
             {errors.adresse && <span className="text-red-500">Ce champ est requis</span>}
           </div>
           <div className="mb-4">
-          <input type="text" name="numeroTel" placeholder="Numéro de téléphone" {...register('numeroTel', { required: true, pattern: /^\d{10}$/ })} className="border border-gray-300 p-2 w-full rounded" />
-            {errors.numeroTel && <span className="text-red-500">Ce champ est requis</span>}
+            <input type="text" name="numeroTel" placeholder="Numéro de téléphone" {...register('numeroTel', { required: true, pattern: /^\d{10}$/ })} className="border border-gray-300 p-2 w-full rounded" />
+              {errors.numeroTel && <span className="text-red-500">Ce champ est requis</span>}
+          </div>
+          <div className="mb-4">
+            <input type="email" name="email" placeholder="Email" {...register('email', { required: true })}  className="border border-gray-300 p-2 w-full rounded" />
+              {errors.email && <span className="text-red-500">Ce champ est requis</span>}
           </div>
           <div className="mb-4">
             <input type="date" name="dateNaissance" placeholder="Date de naissance" {...register('dateNaissance', { required: true })} className="border border-gray-300 p-2 w-full rounded" />

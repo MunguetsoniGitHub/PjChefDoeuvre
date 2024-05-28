@@ -13,6 +13,12 @@ router.get('/:id', utilisateurController.getUtilisateurById);
 // POST - Créer un nouvel utilisateur
 router.post('/', utilisateurController.createUtilisateur);
 
+
+// POST - Créer un utilisateur via /register
+router.post('/register', utilisateurController.createUtilisateur);
+
+
+
 // PUT - Mettre à jour un utilisateur existant
 router.put('/:id', utilisateurController.updateUtilisateur);
 

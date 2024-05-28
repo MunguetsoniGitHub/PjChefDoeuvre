@@ -27,6 +27,7 @@ const utilisateurController = {
 
   createUtilisateur: async (req, res) => {
     const data = req.body;
+    console.log('Data received for user creation:', data);
     try {
       const newUtilisateur = await utilisateurModel.createUtilisateur(data);
       res.status(201).json(newUtilisateur);

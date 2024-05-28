@@ -25,8 +25,10 @@ const utilisateurModel = {
   createUtilisateur: async (data) => {
     try {
       const newUtilisateur = await prisma.utilisateur.create({ data });
+      console.log('Nouvelle utilisateur crée:', newUtilisateur);
       return newUtilisateur;
     } catch (error) {
+      console.error('Error in createUtilisateur model:', error);
       throw new Error('Une erreur est survenue lors de la création de l\'utilisateur.');
     }
   },

@@ -29,7 +29,7 @@ model Utilisateur {
   motDePasse   String
   adresse      String
   numeroTel    String
-  dateNaissance DateTime
+  dateNaissance String
   role                Role               @default(UTILISATEUR_STANDARD)
   annonces     Annonce[]
   offres       Offre[]

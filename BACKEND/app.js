@@ -5,6 +5,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+const authRoutes = require('./routes/authRoutes');
+
 require('dotenv').config();
 
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
@@ -25,6 +27,8 @@ const app = express();
 
 // Middleware pour traiter les données au format JSON
 app.use(express.json());
+
+app.use('/auth', authRoutes);
 
 // Autoriser les requêtes CORS de tous les domaines (à adapter selon vos besoins)
 // app.use(cors());

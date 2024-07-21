@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const utilisateurController = require('../controllers/utilisateurController');
+const {utilisateurController, getUserAnnonces} = require('../controllers/utilisateurController');
 
 // GET - Récupérer tous les utilisateurs
 router.get('/', utilisateurController.getAllUtilisateurs);
@@ -12,6 +12,9 @@ router.get('/:id', utilisateurController.getUtilisateurById);
 
 // POST - Créer un nouvel utilisateur
 router.post('/', utilisateurController.createUtilisateur);
+
+
+router.get('/:utilisateurId/annonces', getUserAnnonces);
 
 
 // POST - Créer un utilisateur via /register

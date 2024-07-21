@@ -1,70 +1,110 @@
+  import IMG_0877 from '../assets/ANN/IMG_0877.jpg'
+  import IMG_0889 from '../assets/ANN/IMG_0889.jpg'
 
 
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import '../../node_modules/swiper/swiper-bundle.min.css';
+import React, { useState } from 'react';
+import ImageSlider from './Annonce/ImageSlider';
+import AnnonceDetails from './Annonce/AnnonceDetails';
+import Participants from './Annonce/Participants';
+import MeilleureOffre from './Annonce/MeilleureOffre';
+import Description from './Annonce/Description';
 
-import '../../node_modules/swiper/modules/navigation.min.css';
-import '../../node_modules/swiper/modules/pagination.min.css';
+// const Annonce = ({ page }) => {
+//   const [participated, setParticipated] = useState(false);
 
-import  Navigation from '../../node_modules/swiper/modules/navigation.mjs';
-import Pagination from '../../node_modules/swiper/modules/pagination.mjs';
+//   const annonce = {
+//     images: [IMG_0877, IMG_0889, 'image3.jpg'],
+//     typePropriete: 'Appartement',
+//     prixDepart: 100000,
+//     palier: 5000,
+//     debutEncheres: '2024-05-10',
+//     finPrevue: '2024-05-15',
+//     etatAnnonce: 'En cours',
+//     participants: [
+//       { id: 1, nom: 'Alice', offre: 105000 },
+//       { id: 2, nom: 'Bob', offre: 110000 },
+//     ],
+//   };
 
-// import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+//   const nombreParticipants = annonce.participants.length;
+//   const meilleureOffre = Math.max(...annonce.participants.map(participant => participant.offre));
 
-import SwiperCore from 'swiper/core';
+//   const handleParticipate = () => {
+//     setParticipated(true);
+//   };
 
-SwiperCore.use([Navigation, Pagination]);
+//   return (
+//     <div className={`p-4 ${page === 'Encheres' ? 'w-full md:w-1/3 lg:w-1/4 p-4' : 'w-full'}`}>
+//       <div className="bg-white shadow-md rounded-lg overflow-hidden">
+//         <ImageSlider images={annonce.images} />
+//         <div className="p-4 flex flex-col">
+//           <div className="flex justify-between items-center">
+//             <AnnonceDetails
+//               typePropriete={annonce.typePropriete}
+//               prixDepart={annonce.prixDepart}
+//               palier={annonce.palier}
+//               debutEncheres={annonce.debutEncheres}
+//               finPrevue={annonce.finPrevue}
+//               etatAnnonce={annonce.etatAnnonce}
+//             />
+//             {page === 'Encheres' && (
+//               <button
+//                 className={`ml-4 ${participated ? 'bg-green-500' : 'bg-red-500'} hover:${participated ? 'bg-green-700' : 'bg-red-700'} text-white font-bold py-1 px-3 rounded`}
+//                 onClick={handleParticipate}
+//               >
+//                 {participated ? 'Participé' : 'Participer'}
+//               </button>
+//             )}
+//           </div>
+//           <Participants participants={annonce.participants} />
+//           {page === 'Compte' && <MeilleureOffre meilleureOffre={meilleureOffre} onSubmitOffer={() => {}} />}
+//           <div className="mt-4">
+//             <a
+//               href="#"
+//               className="text-blue-500 hover:text-blue-700 font-bold py-2 px-4 w-full block text-center"
+//               onClick={(e) => e.preventDefault()}
+//             >
+//               Description
+//             </a>
+//           </div>
+//           {page === 'Compte' && <Description />}
+//         </div>
+//       </div>
+//     </div>
+  
+//   );
+// };
 
-const Annonce = () => {
-  // Données fictives d'une annonce
-  const annonce = {
-    images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
-    typePropriete: 'Appartement',
-    prixDepart: 100000,
-    palier: 5000,
-    debutEncheres: '2024-05-10',
-    finPrevue: '2024-05-15',
-    etatAnnonce: 'En cours',
-    participants: [
-      { id: 1, nom: 'Alice', offre: 105000 },
-      { id: 2, nom: 'Bob', offre: 110000 },
-    ],
-  };
+const Annonce = ({ annonce, page, 
+  // , utilisateurId 
+  images
+}) => {
+  const [participated, setParticipated] = useState(false);
 
   return (
-    <div className="max-w-4xl mx-auto my-8 px-4">
-      <Swiper spaceBetween={30} slidesPerView={1} navigation pagination={{ clickable: true }}>
-        {annonce.images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <img src={image} alt={`Image ${index + 1}`} className="w-full" />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <div className="mt-4">
-        <h2 className="text-2xl font-bold">{annonce.typePropriete}</h2>
-        <p>Prix de départ : {annonce.prixDepart}</p>
-        <p>Palier : {annonce.palier}</p>
-        <p>Début des enchères : {annonce.debutEncheres}</p>
-        <p>Fin prévue : {annonce.finPrevue}</p>
-        <p>État de l'annonce : {annonce.etatAnnonce}</p>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Participer</button>
-        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">Description</button>
-      </div>
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold">Participants</h3>
-        <ul>
-          {annonce.participants.map((participant) => (
-            <li key={participant.id}>
-              {participant.nom} - Offre : {participant.offre}
-            </li>
-          ))}
-        </ul>
-        <input type="number" placeholder="Votre offre" className="w-64 py-2 px-4 border border-gray-300 rounded mt-4" />
-        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">Votre offre</button>
-      </div>
+    <div className={`max-w-4xl mx-auto my-8 px-4 ${page === 'encheres' ? 'w-1/3' : ''}`}>
+      <ImageSlider 
+      // images={annonce.images} 
+      annonce={annonce}
+
+      images={images}
+      />
+      <AnnonceDetails
+        annonce={annonce}
+        page={page}
+        // utilisateurId={utilisateurId}
+        setParticipated={setParticipated}
+      />
+      {page === 'compte' && participated && (
+        <>
+          <MeilleureOffre meilleureOffre={annonce.meilleureOffre} />
+          <Participants participants={annonce.participants} />
+        </>
+      )}
+      <Description />
     </div>
   );
 };
 
 export default Annonce;
+

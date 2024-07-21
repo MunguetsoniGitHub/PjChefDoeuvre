@@ -1,6 +1,8 @@
 
 
 import React from "react";
+import NousChoisir from "../composants/Accueil/NousChoisir";
+import { Footer } from "../composants/Footer/Footer";
 
 const Accueil = () => {
 
@@ -8,54 +10,44 @@ const Accueil = () => {
 
     return(
     <div className=" flex flex-col h-max bg-gray-100">
-    <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white py-20 px-6">
-        <div className="container mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Bienvenue sur EnchèresImmo</h1>
-          <p className="text-lg md:text-xl mb-8">Trouvez votre prochaine propriété de rêve.</p>
-          <button className="bg-white hover:bg-gray-100 text-blue-500 font-bold py-2 px-4 rounded shadow-md">Explorer les Enchères</button>
+      <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white h-96 px-40 flex flex-row gap-6"  style={{ backgroundImage: 'url("https://res.cloudinary.com/djlamvqne/image/upload/v1720194581/maedev/lvrhhn7czavwtitav6u2.png")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }} >
+      
+        <div className="border-solid border-2 shadow-md rounded-lg p-4 h-48 w-450px absolute bottom-1/4 left-72 bg-gray-mae flex items-center">
+            <h3 className="text-red-mae font-bold mb-2 font-kaushan text-center text-3xl">Profiter d'une meilleure expérience sur notre plateforme des ventes immobilières aux enchères. </h3>
+        </div>
+        
+        <div className="border-solid border-2 shadow-md rounded-lg p-4 h-48 w-450px absolute bottom-1/4 right-72 bg-white flex items-center">
+            <h3 className="text-black font-bold mb-2 font-kaushan  text-center text-3xl">Vous avez donc la possibilité de l'enchérir à une vente ou de mettre en vente votre propriété. </h3>
         </div>
       </div>
 
-      {/* Contenu principal */}
-      <div className="container mx-auto py-12">
-        <h2 className="text-3xl font-bold mb-6">Dernières Enchères</h2>
-        {/* Section pour afficher les enchères récentes */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Carte d'enchère 1 */}
-          <div className="bg-white shadow-md rounded-lg p-4">
-            <h3 className="text-xl font-bold mb-2">Maison à la plage</h3>
-            <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div className="flex justify-between items-center mt-4">
-              <p className="text-sm text-gray-500">Temps restant: 2 jours</p>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Enchérir</button>
-            </div>
-          </div>
-          {/* Carte d'enchère 2 */}
-          <div className="bg-white shadow-md rounded-lg p-4">
-            <h3 className="text-xl font-bold mb-2">Appartement en centre-ville</h3>
-            <p className="text-gray-700">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <div className="flex justify-between items-center mt-4">
-              <p className="text-sm text-gray-500">Temps restant: 3 jours</p>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Enchérir</button>
-            </div>
-          </div>
-          {/* Carte d'enchère 3 */}
-          <div className="bg-white shadow-md rounded-lg p-4">
-            <h3 className="text-xl font-bold mb-2">Villa de luxe avec piscine</h3>
-            <p className="text-gray-700">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <div className="flex justify-between items-center mt-4">
-              <p className="text-sm text-gray-500">Temps restant: 5 jours</p>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Enchérir</button>
-            </div>
-          </div>
+      <div className="container mx-auto py-12 px-40 h-72 flex flex-row items-end">
+        <p>N'hésitez pas à dérouler les annonces afin d'apprécier les offres en lançant une recherche avec les options qui vous convient, et participer aux enchères d’une annonce en cliquant sur le bouton d'action "participer" et poursuivez cette annonce dans l'onglet/page "Compte" pour pouvoir enchérir avant la fin de cette dernière. </p>
+      </div>
+
+      <div className="container mx-auto py-12 px-40 h-96 flex flex-col justify-around">
+        <h2 className="text-3xl font-bold mb-6 text-center">Pourquoi choisir MimmoEnchères</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">       
+          <NousChoisir title="Annonces" lorem="Enchères transparentes et en temps réel pour une expérience d'achat immobilière immersive." />
+          <NousChoisir title="Fiabilité" lorem="Accompagnement dans le processus d'achat, après paiement d'acompte." />
+          <NousChoisir title="Expérience utilisateur" lorem="Interface utilisateur intuitive et responsive pour une navigation fluide et agréable." />           
         </div>
       </div>
 
-      <footer className="bg-gray-800 text-white py-6">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 EnchèresImmo - Tous droits réservés</p>
+      <div className="container mx-auto gap-6 py-12 px-40 flex h-56 text-center items-center"  style={{ backgroundImage: 'url("https://res.cloudinary.com/djlamvqne/image/upload/v1720176204/maedev/zsrkqfagmxt5au6lfvc0.jpg")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'  }} >
+        
+        <div className="border-solid border-2 border-white shadow-md rounded-lg p-4">
+            <h3 className="text-white font-bold mb-2">Profiter d'une meilleure expérience sur notre plateforme des ventes immobilières aux enchères. </h3>
         </div>
-      </footer>
+        
+        <div className="border-solid border-2 border-white shadow-md rounded-lg p-4">
+            <h3 className="text-white font-bold mb-2">Vous avez donc la possibilité de l'enchérir à une vente ou de mettre en vente votre propriété. </h3>
+        </div>
+        
+      </div>
+
+      <Footer />
 
     </div>
     )

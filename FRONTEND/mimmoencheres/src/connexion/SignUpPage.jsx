@@ -14,27 +14,40 @@ const SignUpPage = () => {
       alert("Les mots de passe ne correspondent pas.");
       return;
     }
-  // Supprimer confirmationMotDePasse avant d'envoyer les données au backend
+  
   const { confirmationMotDePasse, ...userData } = data;
 
     // const dateNaissance = new Date(data.dateNaissance).toISOString();
+  
+    // if (userData.dateNaissance) {
+    //   userData.dateNaissance = new Date(userData.dateNaissance).toISOString();
+    // }
+
+    
 
     try {
       console.log('Submitting data:', data);
-      const response = await axios.post('http://localhost:3000/utilisateurs/register', userData, {
-        withCredentials: true, // Activer les credentials pour CORS)
-    });
+      const response = await axios.post('http://localhost:3000/api/utilisateurs', userData
+        , {
+        withCredentials: true, }
+      );
       console.log('Utilisateur créé:', response.data);
-      // Rediriger ou afficher un message de succès
+      
     } catch (error) {
       console.error(error.message);
-      // Afficher un message d'erreur à l'utilisateur
+      
     }
   };
 
   return (
     <div className="flex w-screen h-screen max-h-full bg-white">
-      <div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
+      
+      <div className="w-1/2 h-full bg-cover bg-center rounded-r-full" style={{ backgroundImage: 'url("https://res.cloudinary.com/djlamvqne/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}>
+      </div>
+
+      <div className="w-1/2 h-full flex items-center justify-center p-6 bg-white">
+
+      <div className="max-w-lg mx-auto p-6 rounded shadow">
         <h2 className="text-2xl mb-4">Créer un compte</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
@@ -83,6 +96,9 @@ const SignUpPage = () => {
           <Link to="/login" className="text-blue-500 hover:underline">Se connecter</Link>
         </div>
       </div>
+
+      </div>
+
     </div>
   );
 };

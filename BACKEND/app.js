@@ -1,16 +1,31 @@
 
-
-// Importation des modules
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const authRoutes = require('./routes/authRoutes');
+// Initialisation de l'application Express
+const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 require('dotenv').config();
-
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
+// // Passport - google config
+// const passport = require('./config/passport');
+// const session = require('express-session');
+// const authRoutesGoogle = require('./routes/authRoutesGoogle');
+// app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use('/api/auth', authRoutesGoogle);
+
+
+const authRoutes = require('./routes/authRoutes');
+
+// const authController = require('./controllers/authController');
+// const authMiddleware = require('./middleware/authMiddleware');
 
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 // const annonceModel = require('./models/annonceModel');
@@ -22,34 +37,71 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const offreRoutes = require('./routes/offreRoutes');
 const paiementsAcompteRoutes = require('./routes/paiementsAcompteRoutes');
 
-// Initialisation de l'application Express
-const app = express();
+const path = require('path');
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
+});
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//   if (req.method === 'OPTIONS') {
+//     return res.status(200).json({});
+//   }
+//   next();
+// });
+
+// app.use(cors());
 // Middleware pour traiter les données au format JSON
 app.use(express.json());
 
-app.use('/auth', authRoutes);
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  credentials: true
+}));
+
 
 // Autoriser les requêtes CORS de tous les domaines (à adapter selon vos besoins)
 // app.use(cors());
 
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  credentials: true
-};
+// const corsOptions = {
+//   origin: 'http://localhost:5173',
+//   credentials: true
+// };
+// app.use(cors(corsOptions));
 
-app.use(cors(corsOptions));
-app.use(bodyParser.json());
+
+
+
+//  app.use('/api/auth', require('./routes/authRoutes'));  //à revoir
+
+//  app.post('/api/auth/login', authController.login);
+//  app.get('/api/dashboard', authMiddleware, (req, res) => {
+//      res.json({ message: 'Protected route accessed successfully', user: req.user });
+//  });
+
+// app.use(authMiddleware);
+
+app.use('/api/auth', authRoutes);
+
 
 // Montage des routes "Utilisateur"
-app.use('/utilisateurs', utilisateurRoutes);
-app.use('/annonces', annonceRoutes);
+app.use('/api/utilisateurs', utilisateurRoutes);
+app.use('/api/annonces', annonceRoutes);
 app.use('/encheres', enchereRoutes);
-app.use('/images', imageRoutes);
+app.use('/api/images', imageRoutes);
 app.use('/demandes-validation', demandeValidationRoutes);
 app.use('/notifications', notificationRoutes);
 app.use('/offres', offreRoutes);
 app.use('/paiements-acompte', paiementsAcompteRoutes);
+
+// Configuration du serveur Express pour servir les fichiers statiques
+app.use('/uploads', express.static(path.join(__dirname, '../..', 'uploads')));
 
 // Définition des routes
 app.get('/', (req, res) => {
@@ -65,11 +117,7 @@ app.get('/annonces', async (req, res) => {
   }
 });
 
-// Démarrage du serveur
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur le port ${PORT}`);
-});
+
 
 
 

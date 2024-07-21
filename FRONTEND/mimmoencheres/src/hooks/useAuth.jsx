@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import axios from "axios";
@@ -12,11 +13,19 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     try {
-      const response = await axios.post("/api/auth/login", data);
+      const response = await axios.post("http://localhost:3000/api/auth/login", data, {
+        withCredentials: true });
+
+
       const { token, user } = response.data;
+
+      console.log("Login response data:", response.data);
+
       setToken(token);
       setUser(user);
-      navigate("/profile");
+      navigate("/dashboard");
+
+      console.log('Login successful:', response.data);
     } catch (error) {
       console.error("Login error", error);
       throw new Error("Invalid username or password");
@@ -24,9 +33,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+
+    console.log("Logging out");
+
     removeToken();
     setUser(null);
-    navigate("/", { replace: true });
+    navigate("/login", { replace: true });
   };
 
   const value = useMemo(
@@ -36,10 +48,12 @@ export const AuthProvider = ({ children }) => {
       login,
       logout,
     }),
-    [user, token]
+    [user, token ]
   );
 
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  
 };
 
 export const useAuth = () => {

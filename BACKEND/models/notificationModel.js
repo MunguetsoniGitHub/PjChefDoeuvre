@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 const notificationModel = {
   getAllNotifications: async () => {
     try {
-      const notifications = await prisma.notification.findMany();
+      const notifications = await prisma.Notification.findMany();
       return notifications;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération des notifications.');
@@ -16,7 +16,7 @@ const notificationModel = {
 
   getNotificationById: async (id) => {
     try {
-      const notification = await prisma.notification.findUnique({ where: { id } });
+      const notification = await prisma.Notification.findUnique({ where: { id } });
       return notification;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération de la notification.');
@@ -25,7 +25,7 @@ const notificationModel = {
 
   createNotification: async (data) => {
     try {
-      const newNotification = await prisma.notification.create({ data });
+      const newNotification = await prisma.Notification.create({ data });
       return newNotification;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la création de la notification.');
@@ -34,7 +34,7 @@ const notificationModel = {
 
   updateNotification: async (id, data) => {
     try {
-      const updatedNotification = await prisma.notification.update({ where: { id }, data });
+      const updatedNotification = await prisma.Notification.update({ where: { id }, data });
       return updatedNotification;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la mise à jour de la notification.');
@@ -43,7 +43,7 @@ const notificationModel = {
 
   deleteNotification: async (id) => {
     try {
-      await prisma.notification.delete({ where: { id } });
+      await prisma.Notification.delete({ where: { id } });
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la suppression de la notification.');
     }

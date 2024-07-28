@@ -72,7 +72,7 @@ return (
         <button onClick={handleLogout} className='color[FF0303]'>Déconnexion</button>
       </nav>
       </header>
-      <main className="relative flex-1 mt-16 overflow-auto">
+      <main className="relative flex-1 mt-16 overflow-auto py-12">
       {/* <Outlet className=" p-50" />  */}
       <Outlet className=" p-50"/>
       </main>

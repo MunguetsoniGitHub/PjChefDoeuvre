@@ -17,21 +17,18 @@ import SwiperCore from 'swiper/core';
 
 SwiperCore.use([Navigation, Pagination]);
 
-const ImageSlider = ({ annonce
-  ,images 
+const ImageSlider = ({ annonce,
+  // ,images
+  enchere 
 }) => (
   <Swiper spaceBetween={30} slidesPerView={1} navigation pagination={{ clickable: true }} modules={[Navigation, Pagination]}  >
-    {/* {images.map((image, index) => ( */}
+
     { annonce.images.map((image) => (
-    // {/* {images
-    //           .filter((image) => image.annonceId === annonce.id)
-    //           .map((image) => ( */}
-      <SwiperSlide key={image.id}
-      // key={index}
-      >
-        <img src={`http://localhost:3000/uploads/${image.lienImage}`} alt={annonce.titre}
-        // src={image} alt={`Image ${index + 1}`} 
-        className="w-full" />
+    
+      <SwiperSlide key={image.id}>
+
+        <img src={`http://localhost:3000/uploads/${image.lienImage}`} alt={annonce.titre} className="w-full" />
+
       </SwiperSlide>
     ))}
   </Swiper>

@@ -13,6 +13,7 @@ const upload = require('../middleware/upload');
 router.post('/', upload.array('images'), annonceController.createAnnonce);
 
 
+
 const {
   // getAnnonceById,
   // annonceController,
@@ -25,9 +26,9 @@ const {
 // Participation aux enchères d'une annonce
 
 router.get('/', getAllAnnonces);
-router.post('/participer', participate);
-router.delete('/participer', removeParticipation);
-router.get('/checkParticipation', checkParticipation);
+// router.post('/participer', participate);
+// router.delete('/participer', removeParticipation);
+// router.get('/checkParticipation', checkParticipation);
 
 // GET - Récupérer toutes les annonces
 // router.get('/annonces', annonceController.getAllAnnonces);

@@ -1,104 +1,118 @@
-  import IMG_0877 from '../assets/ANN/IMG_0877.jpg'
-  import IMG_0889 from '../assets/ANN/IMG_0889.jpg'
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageSlider from './Annonce/ImageSlider';
 import AnnonceDetails from './Annonce/AnnonceDetails';
-import Participants from './Annonce/Participants';
+// import Participants from './Annonce/Participants';
 import MeilleureOffre from './Annonce/MeilleureOffre';
 import Description from './Annonce/Description';
 
-// const Annonce = ({ page }) => {
-//   const [participated, setParticipated] = useState(false);
+// import ParticiperButton from './Annonce/ParticiperButton';
+// import OffreInput from './Annonce/OffreInput';
 
-//   const annonce = {
-//     images: [IMG_0877, IMG_0889, 'image3.jpg'],
-//     typePropriete: 'Appartement',
-//     prixDepart: 100000,
-//     palier: 5000,
-//     debutEncheres: '2024-05-10',
-//     finPrevue: '2024-05-15',
-//     etatAnnonce: 'En cours',
-//     participants: [
-//       { id: 1, nom: 'Alice', offre: 105000 },
-//       { id: 2, nom: 'Bob', offre: 110000 },
-//     ],
-//   };
+import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
 
-//   const nombreParticipants = annonce.participants.length;
-//   const meilleureOffre = Math.max(...annonce.participants.map(participant => participant.offre));
+const Annonce = ({ annonce, annonceId,
+  // annonce,  , utilisateurId 
+  page,images,  enchere}) => {
 
-//   const handleParticipate = () => {
-//     setParticipated(true);
-//   };
+  // const [participated, setParticipated] = useState(false);
 
-//   return (
-//     <div className={`p-4 ${page === 'Encheres' ? 'w-full md:w-1/3 lg:w-1/4 p-4' : 'w-full'}`}>
-//       <div className="bg-white shadow-md rounded-lg overflow-hidden">
-//         <ImageSlider images={annonce.images} />
-//         <div className="p-4 flex flex-col">
-//           <div className="flex justify-between items-center">
-//             <AnnonceDetails
-//               typePropriete={annonce.typePropriete}
-//               prixDepart={annonce.prixDepart}
-//               palier={annonce.palier}
-//               debutEncheres={annonce.debutEncheres}
-//               finPrevue={annonce.finPrevue}
-//               etatAnnonce={annonce.etatAnnonce}
-//             />
-//             {page === 'Encheres' && (
-//               <button
-//                 className={`ml-4 ${participated ? 'bg-green-500' : 'bg-red-500'} hover:${participated ? 'bg-green-700' : 'bg-red-700'} text-white font-bold py-1 px-3 rounded`}
-//                 onClick={handleParticipate}
-//               >
-//                 {participated ? 'Participé' : 'Participer'}
-//               </button>
-//             )}
-//           </div>
-//           <Participants participants={annonce.participants} />
-//           {page === 'Compte' && <MeilleureOffre meilleureOffre={meilleureOffre} onSubmitOffer={() => {}} />}
-//           <div className="mt-4">
-//             <a
-//               href="#"
-//               className="text-blue-500 hover:text-blue-700 font-bold py-2 px-4 w-full block text-center"
-//               onClick={(e) => e.preventDefault()}
-//             >
-//               Description
-//             </a>
-//           </div>
-//           {page === 'Compte' && <Description />}
-//         </div>
-//       </div>
-//     </div>
+  const {user} = useAuth();
   
-//   );
-// };
+  // const [enchereId, setEnchereId]  = useState(null);
+  // console.log('test enchereId',enchereId);
+  
+  // setEnchereId ( annonce.encheres.flatMap(enchere => ({
+  //     ...enchere, ID :enchere.id
+  //   }) ) )
+  // const enchereId =annonce.encheres.map(enchere => (enchere.id) );
+  const enchereId = enchere.id;
 
-const Annonce = ({ annonce, page, 
-  // , utilisateurId 
-  images
-}) => {
-  const [participated, setParticipated] = useState(false);
+  // const [enchere, setEnchere] = useState(null);
+  const [offres, setOffres] = useState([]);
+  const [nouvelleOffre, setNouvelleOffre] = useState(0);
+  const [isParticipant, setIsParticipant] = useState(false);
+
+  useEffect(() => {
+    // const fetchEnchere = async () => {
+    //   const response = await axios.get(`http://localhost:3000/api/enchere/${annonceId}`); 
+    //   // const response = await axios.get(`http://localhost:3000/api/enchere/${enchereId}`);
+    //   setEnchere(response.data);
+    // };
+
+    const fetchOffres = async () => {
+      const response = await axios.get(`http://localhost:3000/api/offres/${annonceId}`);
+      // const response = await axios.get(`http://localhost:3000/api/offres/${enchereId}`);
+      setOffres(response.data);
+    };
+
+    // fetchEnchere();
+    fetchOffres();
+  }, 
+  [annonceId]
+  // [annonceId,enchereId]
+  );
+
+  const handleInscription = async () => {
+    const utilisateurId= user.id;
+    try {
+      await axios.post(`http://localhost:3000/api/enchere/${enchereId}/inscrire`, {
+      // await axios.post(`http://localhost:3000/api/enchere/${annonceId}/inscrire`, {
+  
+      utilisateurId, 
+      // enchereId
+      });
+      setIsParticipant(true);
+      
+    } catch (error) {
+      console.error(error);
+      console.log( "utilisateur qui participe", utilisateurId);
+      console.log( "enchere concerné", enchereId);
+    }
+  };
+
+  const handleOffreSubmit = async () => {
+    if (!isParticipant) {
+      console.error('Vous devez être inscrit à l\'enchère pour soumettre une offre');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/offre', {
+        montantOffre: nouvelleOffre,
+        utilisateurId: user.id,
+        // enchereId: enchere.id,
+        enchereId
+      });
+      setOffres([...offres, response.data]);
+      // setEnchere({ ...enchere, meilleurMontant: nouvelleOffre });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className={`max-w-4xl mx-auto my-8 px-4 ${page === 'encheres' ? 'w-1/3' : ''}`}>
-      <ImageSlider 
-      // images={annonce.images} 
-      annonce={annonce}
+      <ImageSlider annonce={annonce} images={images} enchere={enchere} />
+      <AnnonceDetails  annonce={annonce} page={page}
+        // utilisateurId={utilisateurId} setParticipated={setParticipated}  
+        enchere={enchere}
+        handleInscription={handleInscription} isParticipant={isParticipant}
+         />
 
-      images={images}
-      />
-      <AnnonceDetails
-        annonce={annonce}
-        page={page}
-        // utilisateurId={utilisateurId}
-        setParticipated={setParticipated}
-      />
-      {page === 'compte' && participated && (
+      {/* {page === 'compte' && participated && ( */}
+      {page === 'compte' && isParticipant && (
         <>
-          <MeilleureOffre meilleureOffre={annonce.meilleureOffre} />
-          <Participants participants={annonce.participants} />
+          <MeilleureOffre 
+          // meilleureOffre={annonce.meilleureOffre} 
+          enchere={enchere}
+          nouvelleOffre={nouvelleOffre}
+        setNouvelleOffre={setNouvelleOffre}
+        handleOffreSubmit={handleOffreSubmit}
+        isParticipant={isParticipant}
+          />
+          {/* <Participants participants={annonce.participants} /> */}
         </>
       )}
       <Description />

@@ -38,6 +38,9 @@ const login = async (req, res) => {
         res.json({ token,
             user: {
                 id: user.id,
+                prenom: user.prenom,
+                nom: user.nom,
+                postnom: user.postnom,
                 email: user.email,
                 adresse: user.adresse,      
                 numeroTel: user.numeroTel,    

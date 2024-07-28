@@ -14,14 +14,12 @@ const Publier = () => {
     formData.append('typeBien', data.typeBien);
     formData.append('surface', data.surface);
     formData.append('localisation', data.localisation);
-    formData.append('prixInitial', data.prixInitial);
+    // formData.append('prixInitial', data.prixInitial);
     formData.append('proprietaireId', user.id);
 
-
-    //Append images
-    // Array.from(data.images).forEach((image, index) => {
-    //   formData.append(`images[${index}]`, image);
-    // });
+    formData.append('montantDuDepart', data.montantDuDepart);
+    formData.append('dateHeureDebut', data.dateHeureDebut);
+    formData.append('dateHeureFin', data.dateHeureFin);
 
     Array.from(data.images).forEach((image) => {
       formData.append('images', image);
@@ -98,7 +96,7 @@ const Publier = () => {
           />
           {errors.localisation && <p className="text-red-500 text-sm">{errors.localisation.message}</p>}
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <input
             type="number"
             name="prixInitial"
@@ -108,7 +106,38 @@ const Publier = () => {
             className="border border-gray-300 p-2 w-full rounded"
           />
           {errors.prixInitial && <p className="text-red-500 text-sm">{errors.prixInitial.message}</p>}
+        </div> */}
+
+        <div className="mb-4">
+          <input
+            type="number"
+            name="montantDuDepart"
+            step="0.01"
+            {...register('montantDuDepart', { required: "Le montant de départ est requis" })}
+            placeholder="Prix initial"
+            className="border border-gray-300 p-2 w-full rounded"
+          />
+          {errors.montantDuDepart && <p className="text-red-500 text-sm">{errors.montantDuDepart.message}</p>}
         </div>
+        <div className="mb-4">
+          <input
+            type="datetime-local"
+            name="dateHeureDebut"
+            {...register('dateHeureDebut', { required: "La date et l'heure de début sont requises" })}
+            className="border border-gray-300 p-2 w-full rounded" placeholder="Début des enchères"
+          />
+          {errors.dateHeureDebut && <p className="text-red-500 text-sm">{errors.dateHeureDebut.message}</p>}
+        </div>
+        <div className="mb-4">
+          <input
+            type="datetime-local"
+            name="dateHeureFin"
+            {...register('dateHeureFin', { required: "La date et l'heure de fin sont requises" })}
+            className="border border-gray-300 p-2 w-full rounded" placeholder="Fin prévue"
+          />
+          {errors.dateHeureFin && <p className="text-red-500 text-sm">{errors.dateHeureFin.message}</p>}
+        </div>  
+
         <div className="mb-4">
           <input
             type="file"

@@ -1,35 +1,16 @@
 
-
 import React, { useContext } from 'react';
-
-import { FaBath } from "react-icons/fa";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { FaBed } from "react-icons/fa";
+import { FaBath, FaMapMarkerAlt, FaBed } from "react-icons/fa";
 import { MdOutlineRealEstateAgent } from "react-icons/md";
-
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import '../node_modules/swiper/swiper-bundle.min.css';
-
 import Annonce from '../composants/Annonces';
-
-// import AnnoncesContainer from '../composants/AnnoncesContainer'
-
 import { AnnonceContext } from '../context/AnnonceContext';
 
-const Encheres = (
-  // { annonces, utilisateurId }
-) => {
+const Encheres = () => {
 
-  const { annonces, images, loading, error } = useContext(AnnonceContext);
+    const { annonces, images,  encheres, loading, error } = useContext(AnnonceContext);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching annonces: {error.message}</p>;
-
-    // const enchereAnnonces = [
-    //   // Remplissez avec les données de vos annonces pour la page Enchères
-    //   { id: 1 },
-    //   { id: 2 },
-    // ];
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error fetching annonces: {error.message}</p>;
 
     return(
       <div className="flex flex-col h-full bg-gray-100 px-40 ">
@@ -54,15 +35,12 @@ const Encheres = (
         <button className="w-full md:w-auto bg-blue-500 text-white px-4 py-1">Recherche</button>
       </div>
 
-      {/* <div>
-        <AnnoncesContainer annonces={enchereAnnonces} page="Encheres" />
-      </div> */}
-
       <div className="flex flex-wrap">
-      {annonces.map((annonce) => (
-        <Annonce key={annonce.id} annonce={annonce} page="encheres" images={images}
+      {annonces.map((annonce) => ( annonce.encheres.map(enchere => (
+        <Annonce key={annonce.id} annonce={annonce} page="encheres" images={images} annonceId={annonce.id}  enchere={ enchere}
         // utilisateurId={utilisateurId} 
         />
+      ))
       ))}
       </div>
 

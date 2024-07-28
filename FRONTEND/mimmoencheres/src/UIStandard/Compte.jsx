@@ -13,14 +13,22 @@ const Compte = (
   // { annonces, utilisateurId }
 ) => {
 
-  // const {user} = useContext(useAuth);
+  const {user} = useAuth();
 
   // const { annonces, images, loading, error } = useContext(AnnonceContext);
+  const { annonces, images,  encheres, loading, error } = useContext(AnnonceContext);
 
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error fetching annonces: {error.message}</p>;
-
-
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching annonces: {error.message}</p>;
+  
+  //  if(annonces.utilisateurId === user.id){
+    
+  //    annonces.map((annonce) => (
+  //      <Annonce key={annonce.id} annonce={annonce} page="compte" utilisateurId={utilisateurId} />
+  //    ))
+    
+  //  }
+  
     // const compteAnnonces = [
     //   // Remplissez avec les données de vos annonces pour la page Compte
     //   { id: 1 },
@@ -61,19 +69,20 @@ const Compte = (
         
         {/* A restorer dès que nécessaire ou prête  */}
         <div className="flex-1  rounded-lg shadow-md p-4 overflow-auto">
-          {/* {
-            if(annonces.utilisateurId === user.id){
-             return(
-
-              annonces.map((annonce) => (
-                <Annonce key={annonce.id} annonce={annonce} page="compte" utilisateurId={utilisateurId} />
-              ))
-             ) 
-            }
-        } */}
-          {/* {annonces.map((annonce) => (
-            <Annonce key={annonce.id} annonce={annonce} page="compte" utilisateurId={utilisateurId} />
-          ))} */}
+          
+          {
+              annonces.map((annonce) => //{
+                // if(annonce.utilisateurId === user.id)
+                  {annonce.encheres.map(enchere => (
+                  <Annonce key={annonce.id} annonce={annonce} page="compte" images={images} annonceId={annonce.id}  enchere={ enchere}
+                  // utilisateurId={utilisateurId} 
+                  />
+                ))
+                }
+              //}
+            )   
+        }
+       
         </div>
 
 
@@ -92,7 +101,7 @@ const Compte = (
           </div>
           <div className="mb-2">
             <label className="font-bold">Postnom:</label>
-            <p className="text-gray-700">{user.postnom}</p>
+            <p className="text-gray-700">{user.postnim}</p>
           </div>
           <div className="mb-2">
             <label className="font-bold">Adresse:</label>

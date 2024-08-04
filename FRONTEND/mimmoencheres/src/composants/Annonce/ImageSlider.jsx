@@ -17,13 +17,14 @@ import SwiperCore from 'swiper/core';
 
 SwiperCore.use([Navigation, Pagination]);
 
-const ImageSlider = ({ annonce,
-  // ,images
-  enchere 
-}) => (
+const ImageSlider = ({ annonce, images, enchere, page,
+  annonceForUser, imagesForUser, enchereForUser
+}) =>  (
+  
+  // page === 'encheres' ?
   <Swiper spaceBetween={30} slidesPerView={1} navigation pagination={{ clickable: true }} modules={[Navigation, Pagination]}  >
 
-    { annonce.images.map((image) => (
+    { images.map((image) => (
     
       <SwiperSlide key={image.id}>
 
@@ -32,6 +33,19 @@ const ImageSlider = ({ annonce,
       </SwiperSlide>
     ))}
   </Swiper>
+  //  : page === 'compte' ?
+  
+  // <Swiper spaceBetween={30} slidesPerView={1} navigation pagination={{ clickable: true }} modules={[Navigation, Pagination]}  >
+
+  // { imagesForUser.map((image) => (
+  
+  //   <SwiperSlide key={image.id}>
+
+  //     <img src={`http://localhost:3000/uploads/${image.lienImage}`} alt={annonceForUser.titre} className="w-full" />
+
+  //   </SwiperSlide>
+  // ))}
+  // </Swiper> : ''
 );
 
 export default ImageSlider;

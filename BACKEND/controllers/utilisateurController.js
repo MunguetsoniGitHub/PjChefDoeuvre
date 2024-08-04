@@ -7,6 +7,21 @@ const prisma = new PrismaClient();
 require('dotenv').config();
 
 const bcrypt = require('bcrypt');
+const cloudinary = require('cloudinary').v2;
+// const cloudinary = require('../cloudinaryConfig');
+
+const multer = require('multer');
+const path = require('path');
+
+  cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+
+const storage = multer.memoryStorage();
+
+const upload = multer({ storage });
 
 // const {body, validationResult } = require('express-validator');
 // const validator = require('validator');
@@ -68,8 +83,49 @@ const utilisateurController = {
       const saltRounds = 10;
       data.motDePasse = await bcrypt.hash(data.motDePasse, saltRounds);
 
-      const newUtilisateur = await utilisateurModel.createUtilisateur(data);
-      res.status(201).json(newUtilisateur);
+      // if (req.file) {
+
+      //   console.log('Uploading file to Cloudinary:', req.file.path);
+
+      //   const result = await cloudinary.uploader.upload(req.file.path);
+
+      //   console.log('Upload result:', result);
+
+      //   data.profileImageUrl = result.secure_url;
+      // } else {
+      //   console.log('No file uploaded');
+      // }
+
+      // console.log('User data to save:', data);
+
+      if (req.file) {
+        console.log('Uploading file to Cloudinary');
+        const result = await cloudinary.uploader.upload_stream((error, result) => {
+          if (error) {
+            console.error('Cloudinary upload error:', error);
+            res.status(500).json({ error: 'Cloudinary upload failed' });
+          } else {
+            console.log('Upload result:', result);
+            data.profileImageUrl = result.secure_url;
+            saveUser();
+          }
+        }).end(req.file.buffer);
+      } else {
+        console.log('No file uploaded');
+        saveUser();
+      }
+
+      const saveUser = async () => {
+        console.log('User data to save:', data);
+
+        const newUtilisateur = await utilisateurModel.createUtilisateur(data);
+        console.log('Nouvelle utilisateur crée:', newUtilisateur);
+        res.status(201).json(newUtilisateur);
+      };
+
+
+      // const newUtilisateur = await utilisateurModel.createUtilisateur(data);
+      // res.status(201).json(newUtilisateur);
     } catch (error) {
       res.status(500).json({ error: error.message });
       console.log("erreur lors de creation de l'utilisateur ", error);
@@ -101,32 +157,81 @@ const utilisateurController = {
 
 // Récupération des annonces en lien avec l'utilisateur
 
-const getUserAnnonces = async (req, res) => {
+// const getUserAnnonces = async (req, res) => {
+//   const { utilisateurId } = req.params;
+//   try {
+//     const utilisateur = await prisma.Utilisateur.findUnique({
+//       where: { id: Number(utilisateurId) },
+//       include: {
+//         encheres: {
+//           include: {
+//             annonce: true,
+//           },
+//         },
+//       },
+//     });
+//     if (utilisateur) {
+//       const annonces = utilisateur.encheres.map((enchere) => enchere.annonce);
+//       res.status(200).json(annonces);
+//     } else {
+//       res.status(404).json({ error: 'Utilisateur not found' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to fetch annonces for user' });
+//   }
+// };
+
+const getAnnoncesByUtilisateur = async (req, res) => {
   const { utilisateurId } = req.params;
+
   try {
-    const utilisateur = await prisma.Utilisateur.findUnique({
-      where: { id: Number(utilisateurId) },
+    const annonces = await prisma.Annonce.findMany({
+      where: { proprietaireId: parseInt(utilisateurId) },
       include: {
-        encheres: {
-          include: {
-            annonce: true,
-          },
-        },
+        encheres: true,
+        images: true,
       },
     });
-    if (utilisateur) {
-      const annonces = utilisateur.encheres.map((enchere) => enchere.annonce);
-      res.status(200).json(annonces);
-    } else {
-      res.status(404).json({ error: 'Utilisateur not found' });
-    }
+
+    res.status(200).json(annonces);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch annonces for user' });
+    res.status(400).json({ error: error.message });
   }
 };
 
 
+const getEncheresByUtilisateur = async (req, res) => {
+  const { utilisateurId } = req.params;
+
+  try {
+    const participations = await prisma.Participation.findMany({
+      where: { utilisateurId: parseInt(utilisateurId) },
+      include: {
+        enchere: {
+          include: {
+            annonce: true,
+            offres: true,
+          },
+        },
+      },
+    });
+
+    const encheres = participations.map(participation => participation.enchere);
+
+    res.status(200).json(encheres);
+
+   
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
 module.exports = {
   utilisateurController,
-  getUserAnnonces
+  // getUserAnnonces
+  getEncheresByUtilisateur,
+  getAnnoncesByUtilisateur,
+  upload
 };

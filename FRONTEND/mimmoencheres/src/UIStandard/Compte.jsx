@@ -1,46 +1,89 @@
 
 import watson from '../assets/watson.png'
 
-import React, { useContext } from "react";
-import Annonce from '../composants/Annonces';
+import React, { useContext, useEffect, useState } from "react";
+import Annonce from '../composants/AnnonceForUser';
 import { useAuth } from '../hooks/useAuth';
 import { AnnonceContext } from '../context/AnnonceContext';
 
-// import AnnoncesContainer from '../composants/AnnoncesContainer'
+import axios from 'axios';
 
-
-const Compte = (
-  // { annonces, utilisateurId }
-) => {
+const Compte = () => {
 
   const {user} = useAuth();
+  //const { annonces, images,  encheres, loading, error } = useContext(AnnonceContext);
 
-  // const { annonces, images, loading, error } = useContext(AnnonceContext);
-  const { annonces, images,  encheres, loading, error } = useContext(AnnonceContext);
+  const [encheres, setEncheres] = useState([]);
+  const [annonces, setAnnonces] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchEncheres = async () => {
+      const userId = user.id;
+      try {
+        // const response = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/encheres`);
+        const encheresResponses = await Promise.all([axios.get(`http://localhost:3000/api/utilisateurs/${userId}/encheres`)]);
+        // setEncheres(response.data);
+        setEncheres(encheresResponses.data);
+        console.log(encheresResponses, "reponse de encheres");
+      } catch (error) {
+        setError(error);
+        console.log(error, "fetchEncheres, erreur lors de recup enchere");
+      }
+      console.log(userId, "utilisateur ftEnchr");
+    };
+    
+    const fetchAnnonces = async () => {
+      const userId = user.id;
+      try {
+        // const response = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/annonces`);
+        const annoncesResponse = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/annonces`);
+        // setAnnonces(response.data);
+        setAnnonces(annoncesResponse.data);
+        console.log(annoncesResponse.data, 'données de annonces');
+
+        const imagesPromises = annoncesResponse.data.map(annonce =>
+          axios.get(`http://localhost:3000/api/images/annonce/${annonce.id}`)
+        );
+        const imagesResponses = await Promise.all(imagesPromises);
+
+        // const encheresPromises = annoncesResponse.data.map(annonce => 
+        //   axios.get(`http://localhost:3000/api/utilisateurs/${userId}/encheres`) );
+        // const encheresResponses = await Promise.all(encheresPromises);
+
+
+        const annoncesWithDetails = annoncesResponse.data.map((annonce, index) => ({
+          ...annonce,
+          images: imagesResponses[index].data,
+          
+        //   encheres : encheresResponses[index].data
+        }));
+
+        setAnnonces(annoncesWithDetails);
+        setImages(imagesResponses.map(response => response.data));
+        // setEncheres(encheresResponses.map(response => response.data));
+
+      } catch (error) {
+        setError(error);
+        console.log(error, "fetchEncheres, erreur lors de recup enchere");
+      }
+    };
+
+    Promise.all([fetchEncheres(), fetchAnnonces()]).then(() => setLoading(false));
+    // fetchAnnonces
+    // setLoading(false)
+
+    
+  }, [user.id]);
+
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching annonces: {error.message}</p>;
-  
-  //  if(annonces.utilisateurId === user.id){
-    
-  //    annonces.map((annonce) => (
-  //      <Annonce key={annonce.id} annonce={annonce} page="compte" utilisateurId={utilisateurId} />
-  //    ))
-    
-  //  }
-  
-    // const compteAnnonces = [
-    //   // Remplissez avec les données de vos annonces pour la page Compte
-    //   { id: 1 },
-      
-    //   // Ajoutez autant d'annonces que nécessaire
-    // ];
+  if (error) return <p>Error fetching data: {error.message}</p>;
 
     return(
-
-        // <div className=" flex flex-col h-screen bg-gray-100">
-        //     <p>Comptes</p>
-        // </div>
 
     <div className="flex flex-1 overflow-hidden h-full bg-gray-100">
       {/* Section latérale gauche */}
@@ -49,7 +92,7 @@ const Compte = (
         <div className="text-center flex flex-col items-center">
         
            {/* Photo de profil et nom d'utilisateur */}
-          <img className="w-12 h-12 rounded-full mb-2" src={watson} alt="Photo de profil" />
+          <img className="w-12 h-12 rounded-full mb-2" src={user.profileImageUrl} alt="Photo de profil" />
 
           <h3 className="text-lg font-bold">{user.nom} {user.postnom} </h3>
           
@@ -60,17 +103,10 @@ const Compte = (
         </div>
       </div>
 
-      {/* Section centrale */}
-        
-        {/* <div className="flex-1 bg-white rounded-lg shadow-md p-4 overflow-auto">
-        <AnnoncesContainer annonces={compteAnnonces} page="Compte" />
-        </div> */}
-        
-        
-        {/* A restorer dès que nécessaire ou prête  */}
+      {/* Section centrale  */}
         <div className="flex-1  rounded-lg shadow-md p-4 overflow-auto">
           
-          {
+          {/* {
               annonces.map((annonce) => //{
                 // if(annonce.utilisateurId === user.id)
                   {annonce.encheres.map(enchere => (
@@ -81,12 +117,29 @@ const Compte = (
                 }
               //}
             )   
-        }
+          } */}
+
+            <h2 className="text-xl font-bold mb-4">Mes Enchères</h2>
+              {encheres?.map((enchere) => (
+                <Annonce key={enchere.id} annonce={enchere.annonce} page="compte" images={enchere.annonce.images} enchere={enchere} annonceId={enchere.annonce.id} />
+              ))}
+
+              <h2 className="text-xl font-bold mb-4">Mes Annonces</h2>
+              {/* {annonces.map((annonce) => (
+                <Annonce key={annonce.id} annonce={annonce} page="compte" images={annonce.images} />
+              ))} */}
+
+              {annonces.map((annonce) => ( annonce.encheres.map(enchere => (
+                <Annonce key={annonce.id} annonce={annonce} page="compte" images={annonce.images} 
+                annonceId={annonce.id}  enchere={ enchere}
+                // utilisateurId={utilisateurId} 
+                />))
+              ))}
        
         </div>
 
 
-      {/* Section latérale droite */}
+
       <div className="w-1/4 bg-white rounded-lg shadow-md p-4 flex flex-col justify-center">
         {/* Informations sur l'utilisateur */}
         <div>
@@ -101,7 +154,7 @@ const Compte = (
           </div>
           <div className="mb-2">
             <label className="font-bold">Postnom:</label>
-            <p className="text-gray-700">{user.postnim}</p>
+            <p className="text-gray-700">{user.postnom}</p>
           </div>
           <div className="mb-2">
             <label className="font-bold">Adresse:</label>

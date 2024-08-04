@@ -28,7 +28,18 @@ const utilisateurModel = {
 
   createUtilisateur: async (data) => {
     try {
-      const newUtilisateur = await prisma.Utilisateur.create({ data });
+      const newUtilisateur = await prisma.Utilisateur.create({ data : {
+        prenom: data.prenom,
+        nom: data.nom,
+        postnom: data.postnom,
+        adresse: data.adresse,
+        numeroTel: data.numeroTel,
+        email: data.email,
+        dateNaissance: data.dateNaissance,
+        motDePasse: data.motDePasse,
+        profileImageUrl: data.profileImageUrl, 
+      },
+     });
       console.log('Nouvelle utilisateur crée:', newUtilisateur);
       return newUtilisateur;
     } catch (error) {

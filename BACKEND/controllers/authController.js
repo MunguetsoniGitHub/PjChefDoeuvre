@@ -50,7 +50,8 @@ const login = async (req, res) => {
                 offres: user.offres,       
                 notifications: user.notifications, 
                 demandesValidation: user.demandesValidation, 
-                encheres: user.encheres
+                encheres: user.encheres,
+                profileImageUrl: user.profileImageUrl
             }
          });
     } catch (error) {

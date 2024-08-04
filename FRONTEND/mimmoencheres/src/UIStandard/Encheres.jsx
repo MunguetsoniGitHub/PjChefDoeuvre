@@ -37,7 +37,7 @@ const Encheres = () => {
 
       <div className="flex flex-wrap">
       {annonces.map((annonce) => ( annonce.encheres.map(enchere => (
-        <Annonce key={annonce.id} annonce={annonce} page="encheres" images={images} annonceId={annonce.id}  enchere={ enchere}
+        <Annonce key={annonce.id} annonce={annonce} page="encheres" images={annonce.images} annonceId={annonce.id}  enchere={ enchere}
         // utilisateurId={utilisateurId} 
         />
       ))

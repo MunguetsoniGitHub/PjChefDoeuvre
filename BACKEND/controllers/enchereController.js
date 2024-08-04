@@ -107,8 +107,6 @@ const inscrireEnchere = async (req, res) => {
     await prisma.Participation.create({
       
             data: {
-              // utilisateurId,
-              // enchereId: enchere.id,
               utilisateurId:parseInt(utilisateurId),
               enchereId: parseInt(enchereId),
             },

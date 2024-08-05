@@ -30,7 +30,7 @@ model Utilisateur {
   adresse      String
   numeroTel    String
   dateNaissance String
-  profileImageUrl String
+  profileImageUrl String?
   role                Role               @default(UTILISATEUR_STANDARD)
   annonces     Annonce[]
   offres       Offre[]

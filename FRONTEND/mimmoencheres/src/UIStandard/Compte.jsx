@@ -92,7 +92,7 @@ const Compte = () => {
         <div className="text-center flex flex-col items-center">
         
            {/* Photo de profil et nom d'utilisateur */}
-          <img className="w-12 h-12 rounded-full mb-2" src={user.profileImageUrl} alt="Photo de profil" />
+          <img className="w-20 h-20 rounded-full mb-2" src={user.profileImageUrl} alt="Photo de profil" />
 
           <h3 className="text-lg font-bold">{user.nom} {user.postnom} </h3>
           

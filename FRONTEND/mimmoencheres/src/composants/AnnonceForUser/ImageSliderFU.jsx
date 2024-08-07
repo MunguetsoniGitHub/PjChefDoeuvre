@@ -19,8 +19,8 @@ SwiperCore.use([Navigation, Pagination]);
 
 const ImageSlider = ({ annonce, images, enchere, page,
   annonceForUser, imagesForUser, enchereForUser
-}) =>  (
-  
+}) =>  {
+  console.log("reponse de images imgFU", images);
   // // page === 'encheres' ?
   // <Swiper spaceBetween={30} slidesPerView={1} navigation pagination={{ clickable: true }} modules={[Navigation, Pagination]}  >
 
@@ -34,6 +34,8 @@ const ImageSlider = ({ annonce, images, enchere, page,
   //   ))}
   // </Swiper>
   // //  : page === 'compte' ?
+
+  return(
   
   <Swiper spaceBetween={30} slidesPerView={1} navigation pagination={{ clickable: true }} modules={[Navigation, Pagination]}  >
 
@@ -41,12 +43,14 @@ const ImageSlider = ({ annonce, images, enchere, page,
   
     <SwiperSlide key={image.id}>
 
-      <img src={`http://localhost:3000/uploads/${image.lienImage}`} alt={annonce.titre} className="w-full" />
+      <img src={`http://localhost:3000/uploads/${image.lienImage}`} alt={annonce.titre} 
+      // className="w-full" 
+      />
 
     </SwiperSlide>
   }
   )}
-  </Swiper> 
-);
+  </Swiper> )
+};
 
 export default ImageSlider;

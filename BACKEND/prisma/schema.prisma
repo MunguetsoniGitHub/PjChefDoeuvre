@@ -29,13 +29,16 @@ model Utilisateur {
   motDePasse   String
   adresse      String
   numeroTel    String
-  dateNaissance DateTime
+  dateNaissance String
+  profileImageUrl String?
   role                Role               @default(UTILISATEUR_STANDARD)
   annonces     Annonce[]
   offres       Offre[]
   notifications Notification[]
   demandesValidation DemandeValidation[]
   encheres Enchere[]
+
+  participation Participation[]
 }
 
 model Annonce {
@@ -45,7 +48,6 @@ model Annonce {
   typeBien           String
   surface            Float
   localisation       String
-  prixInitial        Float
   proprietaire       Utilisateur   @relation(fields: [proprietaireId], references: [id])
   proprietaireId     Int
   images             Image[]
@@ -55,13 +57,17 @@ model Annonce {
 
 model Enchere {
   id                Int        @id @default(autoincrement())
-  montantEnchere    Float
-  dateEnchere       DateTime
-  utilisateur       Utilisateur @relation(fields: [utilisateurId], references: [id])
-  utilisateurId     Int
+  montantDuDepart   Float
+  meilleurMontant   Float
+  dateHeureDebut    DateTime
+  dateHeureFin      DateTime
+  utilisateur       Utilisateur? @relation(fields: [utilisateurId], references: [id])
+  utilisateurId     Int?
   annonce           Annonce    @relation(fields: [annonceId], references: [id])
   annonceId         Int
   offres            Offre[]
+
+  participations Participation[]
 }
 
 model Offre {
@@ -106,4 +112,12 @@ model PaiementsAcompte {
   datePaiement    DateTime
   offre           Offre       @relation(fields: [offreId], references: [id])
   offreId         Int
+}
+
+model Participation {
+  id           Int       @id @default(autoincrement())
+  utilisateurId Int
+  enchereId    Int
+  utilisateur  Utilisateur @relation(fields: [utilisateurId], references: [id])
+  enchere      Enchere   @relation(fields: [enchereId], references: [id])
 }

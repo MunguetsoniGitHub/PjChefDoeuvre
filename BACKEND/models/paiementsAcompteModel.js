@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 const paiementsAcompteModel = {
   getAllPaiementsAcompte: async () => {
     try {
-      const paiementsAcompte = await prisma.paiementsAcompte.findMany();
+      const paiementsAcompte = await prisma.PaiementsAcompte.findMany();
       return paiementsAcompte;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération des paiements d\'acompte.');
@@ -17,7 +17,7 @@ const paiementsAcompteModel = {
 
   getPaiementsAcompteById: async (id) => {
     try {
-      const paiementsAcompte = await prisma.paiementsAcompte.findUnique({ where: { id } });
+      const paiementsAcompte = await prisma.PaiementsAcompte.findUnique({ where: { id } });
       return paiementsAcompte;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération du paiement d\'acompte.');
@@ -26,7 +26,7 @@ const paiementsAcompteModel = {
 
   createPaiementsAcompte: async (data) => {
     try {
-      const newPaiementsAcompte = await prisma.paiementsAcompte.create({ data });
+      const newPaiementsAcompte = await prisma.PaiementsAcompte.create({ data });
       return newPaiementsAcompte;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la création du paiement d\'acompte.');
@@ -35,7 +35,7 @@ const paiementsAcompteModel = {
 
   updatePaiementsAcompte: async (id, data) => {
     try {
-      const updatedPaiementsAcompte = await prisma.paiementsAcompte.update({ where: { id }, data });
+      const updatedPaiementsAcompte = await prisma.PaiementsAcompte.update({ where: { id }, data });
       return updatedPaiementsAcompte;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la mise à jour du paiement d\'acompte.');
@@ -44,7 +44,7 @@ const paiementsAcompteModel = {
 
   deletePaiementsAcompte: async (id) => {
     try {
-      await prisma.paiementsAcompte.delete({ where: { id } });
+      await prisma.PaiementsAcompte.delete({ where: { id } });
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la suppression du paiement d\'acompte.');
     }

@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const enchereModel = {
   getAllEncheres: async () => {
     try {
-      const encheres = await prisma.enchere.findMany();
+      const encheres = await prisma.Enchere.findMany();
       return encheres;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération des enchères.');
@@ -14,7 +14,7 @@ const enchereModel = {
 
   getEnchereById: async (id) => {
     try {
-      const enchere = await prisma.enchere.findUnique({ where: { id } });
+      const enchere = await prisma.Enchere.findUnique({ where: { id } });
       return enchere;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération de l\'enchère.');
@@ -23,7 +23,7 @@ const enchereModel = {
 
   createEnchere: async (data) => {
     try {
-      const newEnchere = await prisma.enchere.create({ data });
+      const newEnchere = await prisma.Enchere.create({ data });
       return newEnchere;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la création de l\'enchère.');
@@ -32,7 +32,7 @@ const enchereModel = {
 
   updateEnchere: async (id, data) => {
     try {
-      const updatedEnchere = await prisma.enchere.update({ where: { id }, data });
+      const updatedEnchere = await prisma.Enchere.update({ where: { id }, data });
       return updatedEnchere;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la mise à jour de l\'enchère.');
@@ -41,7 +41,7 @@ const enchereModel = {
 
   deleteEnchere: async (id) => {
     try {
-      await prisma.enchere.delete({ where: { id } });
+      await prisma.Enchere.delete({ where: { id } });
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la suppression de l\'enchère.');
     }

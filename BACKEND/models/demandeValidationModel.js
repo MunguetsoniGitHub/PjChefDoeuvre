@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const demandeValidationModel = {
   getAllDemandesValidation: async () => {
     try {
-      const demandesValidation = await prisma.demandeValidation.findMany();
+      const demandesValidation = await prisma.DemandeValidation.findMany();
       return demandesValidation;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération des demandes de validation.');
@@ -14,7 +14,7 @@ const demandeValidationModel = {
 
   getDemandeValidationById: async (id) => {
     try {
-      const demandeValidation = await prisma.demandeValidation.findUnique({ where: { id } });
+      const demandeValidation = await prisma.DemandeValidation.findUnique({ where: { id } });
       return demandeValidation;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la récupération de la demande de validation.');
@@ -23,7 +23,7 @@ const demandeValidationModel = {
 
   createDemandeValidation: async (data) => {
     try {
-      const newDemandeValidation = await prisma.demandeValidation.create({ data });
+      const newDemandeValidation = await prisma.DemandeValidation.create({ data });
       return newDemandeValidation;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la création de la demande de validation.');
@@ -32,7 +32,7 @@ const demandeValidationModel = {
 
   updateDemandeValidation: async (id, data) => {
     try {
-      const updatedDemandeValidation = await prisma.demandeValidation.update({ where: { id }, data });
+      const updatedDemandeValidation = await prisma.DemandeValidation.update({ where: { id }, data });
       return updatedDemandeValidation;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la mise à jour de la demande de validation.');
@@ -41,7 +41,7 @@ const demandeValidationModel = {
 
   deleteDemandeValidation: async (id) => {
     try {
-      await prisma.demandeValidation.delete({ where: { id } });
+      await prisma.DemandeValidation.delete({ where: { id } });
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la suppression de la demande de validation.');
     }

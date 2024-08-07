@@ -1,79 +1,49 @@
 
-
-
 const express = require('express');
 const router = express.Router();
-// const annonceController = require('../controllers/annonceController');
-const annonceModel = require('../models/annonceModel');
+const annonceController = require('../controllers/annonceController');
+// const annonceModel = require('../models/annonceModel');
+
+
+const authMiddleware = require('../middleware/authMiddleware');
+// // const { createAnnonce } = require('../controllers/annonceController');
+
+const upload = require('../middleware/upload');
+
+router.post('/', upload.array('images'), annonceController.createAnnonce);
+
+
+
+const {
+  // getAnnonceById,
+  // annonceController,
+  getAllAnnonces,
+  participate,
+  removeParticipation,
+  checkParticipation,
+} = require('../controllers/annonceController');
+
+// Participation aux enchères d'une annonce
+
+router.get('/', getAllAnnonces);
+// router.post('/participer', participate);
+// router.delete('/participer', removeParticipation);
+// router.get('/checkParticipation', checkParticipation);
 
 // GET - Récupérer toutes les annonces
 // router.get('/annonces', annonceController.getAllAnnonces);
-router.get('/', async (req, res) => {
-    try {
-      const annonces = await annonceModel.getAllAnnonces();
-      res.json(annonces);
-    } catch (error) {
-      res.status(500).send('Une erreur est survenue lors de la récupération des annonces.');
-    }
-  });
 
 // GET - Récupérer une annonce par son ID
-// router.get('/annonces/:id', annonceController.getAnnonceById);
-router.get('/:id', async (req, res) => {
-    const annonceId = req.params.id;
-    
-    try {
-      const annonce = await annonceModel.getAnnonceById(annonceId);
-      if (!annonce) {
-        res.status(404).send('Annonce non trouvée.');
-      } else {
-        res.json(annonce);
-      }
-    } catch (error) {
-      res.status(500).send('Une erreur est survenue lors de la récupération de l\'annonce.');
-    }
-  });
-  
+router.get('/:id', authMiddleware, annonceController.getAnnonceById);  
 
 // POST - Créer une nouvelle annonce
-// router.post('/annonces', annonceController.createAnnonce);
-router.post('/', async (req, res) => {
-    try {
-      const nouvelleAnnonce = await annonceModel.createAnnonce(req.body);
-      res.status(201).json(nouvelleAnnonce);
-    } catch (error) {
-      res.status(500).send('Une erreur est survenue lors de l\'ajout de l\'annonce.');
-    }
-  });
-  
+// router.post('/', annonceController.createAnnonce);
 
 // PUT - Mettre à jour une annonce existante
-// router.put('/annonces/:id', annonceController.updateAnnonce);
-router.put('/:id', async (req, res) => {
-    const annonceId = req.params.id;
-    const nouvelleDonnee = req.body;
-    
-    try {
-      const annonceMiseAJour = await annonceModel.updateAnnonce(annonceId, nouvelleDonnee);
-      res.json(annonceMiseAJour);
-    } catch (error) {
-      res.status(500).send('Une erreur est survenue lors de la mise à jour de l\'annonce.');
-    }
-  });
-  
+router.put('/:id', annonceController.updateAnnonce);
 
 // DELETE - Supprimer une annonce par son ID
-// router.delete('/annonces/:id', annonceController.deleteAnnonce);
-router.delete('/:id', async (req, res) => {
-    const annonceId = req.params.id;
-    
-    try {
-      await annonceModel.deleteAnnonce(annonceId);
-      res.status(204).send();
-    } catch (error) {
-      res.status(500).send('Une erreur est survenue lors de la suppression de l\'annonce.');
-    }
-  });
+router.delete('/:id', annonceController.deleteAnnonce);
   
 
 module.exports = router;

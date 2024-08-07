@@ -1,70 +1,124 @@
 
+import React, { useState, useEffect } from 'react';
+import ImageSlider from './Annonce/ImageSlider';
+import AnnonceDetails from './Annonce/AnnonceDetails';
+// import Participants from './Annonce/Participants';
+import MeilleureOffre from './Annonce/MeilleureOffre';
+import Description from './Annonce/Description';
 
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import '../../node_modules/swiper/swiper-bundle.min.css';
+// import ParticiperButton from './Annonce/ParticiperButton';
+// import OffreInput from './Annonce/OffreInput';
 
-import '../../node_modules/swiper/modules/navigation.min.css';
-import '../../node_modules/swiper/modules/pagination.min.css';
+import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
 
-import  Navigation from '../../node_modules/swiper/modules/navigation.mjs';
-import Pagination from '../../node_modules/swiper/modules/pagination.mjs';
+const Annonce = ({ annonce, annonceId,
+  // annonce,  , utilisateurId 
+  page,images,  enchere}) => {
 
-// import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+  // const [participated, setParticipated] = useState(false);
 
-import SwiperCore from 'swiper/core';
+  const {user} = useAuth();
+  
+  // const [enchereId, setEnchereId]  = useState(null);
+  // console.log('test enchereId',enchereId);
+  
+  // setEnchereId ( annonce.encheres.flatMap(enchere => ({
+  //     ...enchere, ID :enchere.id
+  //   }) ) )
+  // const enchereId =annonce.encheres.map(enchere => (enchere.id) );
+  const enchereId = enchere.id;
 
-SwiperCore.use([Navigation, Pagination]);
+  // const [enchere, setEnchere] = useState(null);
+  const [offres, setOffres] = useState([]);
+  const [nouvelleOffre, setNouvelleOffre] = useState(0);
+  const [isParticipant, setIsParticipant] = useState(false);
 
-const Annonce = () => {
-  // Données fictives d'une annonce
-  const annonce = {
-    images: ['image1.jpg', 'image2.jpg', 'image3.jpg'],
-    typePropriete: 'Appartement',
-    prixDepart: 100000,
-    palier: 5000,
-    debutEncheres: '2024-05-10',
-    finPrevue: '2024-05-15',
-    etatAnnonce: 'En cours',
-    participants: [
-      { id: 1, nom: 'Alice', offre: 105000 },
-      { id: 2, nom: 'Bob', offre: 110000 },
-    ],
+  useEffect(() => {
+    // const fetchEnchere = async () => {
+    //   const response = await axios.get(`http://localhost:3000/api/enchere/${annonceId}`); 
+    //   // const response = await axios.get(`http://localhost:3000/api/enchere/${enchereId}`);
+    //   setEnchere(response.data);
+    // };
+
+    const fetchOffres = async () => {
+      const response = await axios.get(`http://localhost:3000/api/offres/${annonceId}`);
+      // const response = await axios.get(`http://localhost:3000/api/offres/${enchereId}`);
+      setOffres(response.data);
+    };
+
+    // fetchEnchere();
+    fetchOffres();
+  }, 
+  [annonceId]
+  // [annonceId,enchereId]
+  );
+
+  const handleInscription = async () => {
+    const utilisateurId= user.id;
+    try {
+      await axios.post(`http://localhost:3000/api/enchere/${enchereId}/inscrire`, {
+      // await axios.post(`http://localhost:3000/api/enchere/${annonceId}/inscrire`, {
+  
+      utilisateurId, 
+      // enchereId
+      });
+      setIsParticipant(true);
+      
+    } catch (error) {
+      console.error(error);
+      console.log( "utilisateur qui participe", utilisateurId);
+      console.log( "enchere concerné", enchereId);
+    }
+  };
+
+  const handleOffreSubmit = async () => {
+    if (!isParticipant) {
+      console.error('Vous devez être inscrit à l\'enchère pour soumettre une offre');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/offre', {
+        montantOffre: nouvelleOffre,
+        utilisateurId: user.id,
+        // enchereId: enchere.id,
+        enchereId
+      });
+      setOffres([...offres, response.data]);
+      // setEnchere({ ...enchere, meilleurMontant: nouvelleOffre });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto my-8 px-4">
-      <Swiper spaceBetween={30} slidesPerView={1} navigation pagination={{ clickable: true }}>
-        {annonce.images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <img src={image} alt={`Image ${index + 1}`} className="w-full" />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <div className="mt-4">
-        <h2 className="text-2xl font-bold">{annonce.typePropriete}</h2>
-        <p>Prix de départ : {annonce.prixDepart}</p>
-        <p>Palier : {annonce.palier}</p>
-        <p>Début des enchères : {annonce.debutEncheres}</p>
-        <p>Fin prévue : {annonce.finPrevue}</p>
-        <p>État de l'annonce : {annonce.etatAnnonce}</p>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Participer</button>
-        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">Description</button>
-      </div>
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold">Participants</h3>
-        <ul>
-          {annonce.participants.map((participant) => (
-            <li key={participant.id}>
-              {participant.nom} - Offre : {participant.offre}
-            </li>
-          ))}
-        </ul>
-        <input type="number" placeholder="Votre offre" className="w-64 py-2 px-4 border border-gray-300 rounded mt-4" />
-        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">Votre offre</button>
-      </div>
+    <div className={`max-w-4xl mx-auto my-8 px-4 ${page === 'encheres' ? 'w-1/3' : ''}`}>
+      <ImageSlider annonce={annonce} images={images} enchere={enchere} />
+      <AnnonceDetails  annonce={annonce} page={page}
+        // utilisateurId={utilisateurId} setParticipated={setParticipated}  
+        enchere={enchere}
+        handleInscription={handleInscription} isParticipant={isParticipant}
+         />
+
+      {/* {page === 'compte' && participated && ( */}
+      {page === 'compte' && isParticipant && (
+        <>
+          <MeilleureOffre 
+          // meilleureOffre={annonce.meilleureOffre} 
+          enchere={enchere}
+          nouvelleOffre={nouvelleOffre}
+        setNouvelleOffre={setNouvelleOffre}
+        handleOffreSubmit={handleOffreSubmit}
+        isParticipant={isParticipant}
+          />
+          {/* <Participants participants={annonce.participants} /> */}
+        </>
+      )}
+      <Description />
     </div>
   );
 };
 
 export default Annonce;
+

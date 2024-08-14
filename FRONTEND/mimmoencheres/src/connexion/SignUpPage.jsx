@@ -51,13 +51,6 @@ const SignUpPage = () => {
     
 
     try {
-<<<<<<< HEAD
-      const response = await axios.post('http://localhost:3000/register', formData, {
-        withCredentials: true, // Activer les credentials pour CORS
-      });
-      console.log(response.data);
-      // Rediriger ou afficher un message de succès
-=======
       console.log('Submitting data:', data);
       // const response = await axios.post('http://localhost:3000/api/utilisateurs', userData, {
         const response = await axios.post('http://localhost:3000/api/utilisateurs', formData, {
@@ -70,7 +63,6 @@ const SignUpPage = () => {
       );
       console.log('Utilisateur créé:', response.data);
       
->>>>>>> main
     } catch (error) {
       console.error(error.message);
       
@@ -78,10 +70,6 @@ const SignUpPage = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className="flex w-screen h-screen bg-white">
-      <div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
-=======
     <div className="flex w-screen h-screen max-h-full bg-white">
       
       <div className="w-1/2 h-full bg-cover bg-center rounded-r-full" style={{ backgroundImage: 'url("https://res.cloudinary.com/djlamvqne/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}>
@@ -90,7 +78,6 @@ const SignUpPage = () => {
       <div className="w-1/2 h-full flex items-center justify-center p-6 bg-white">
 
       <div className="max-w-lg mx-auto p-6 rounded shadow">
->>>>>>> main
         <h2 className="text-2xl mb-4">Créer un compte</h2>
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
           <div className="mb-4">
@@ -125,21 +112,6 @@ const SignUpPage = () => {
             <input type="date" name="dateNaissance" placeholder="Date de naissance" {...register('dateNaissance', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
             {errors.dateNaissance && <span className="text-red-500">Ce champ est requis</span>}
           </div>
-<<<<<<< HEAD
-          <div className="mb-4">
-            <input type="text" name="adresse" placeholder="Adresse" {...register('adresse', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
-            {errors.adresse && <span className="text-red-500">Ce champ est requis</span>}
-          </div>
-          <div className="mb-4">
-          <input type="text" name="numeroTel" placeholder="Numéro de téléphone" {...register('numeroTel', { required: true, pattern: /^\d{10}$/ })} className="border border-gray-300 p-2 w-full rounded" />
-            {errors.numeroTel && <span className="text-red-500">Ce champ est requis</span>}
-          </div>
-          <div className="mb-4">
-            <input type="date" name="dateNaissance" placeholder="Date de naissance" {...register('dateNaissance', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
-            {errors.dateNaissance && <span className="text-red-500">Ce champ est requis</span>}
-          </div>
-=======
->>>>>>> main
           <div className="mb-4">
             <input type="password" name="motDePasse" placeholder="Mot de passe" {...register('motDePasse', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
             {errors.motDePasse && <span className="text-red-500">Ce champ est requis</span>}
@@ -148,8 +120,6 @@ const SignUpPage = () => {
             <input type="password" name="confirmationMotDePasse" placeholder="Confirmation mot de passe" {...register('confirmationMotDePasse', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
             {errors.confirmationMotDePasse && <span className="text-red-500">Ce champ est requis</span>}
           </div>
-<<<<<<< HEAD
-=======
 
           {/* <div className="mb-4">
               <input type="file" name="profileImage" onChange={(e) => setProfileImage(e.target.files[0])} className="border border-gray-300 p-2 w-full rounded" />
@@ -158,7 +128,6 @@ const SignUpPage = () => {
             <div className="mb-4">
               <input type="file" name="profileImage" {...register('profileImage')} className="border border-gray-300 p-2 w-full rounded" />
             </div>
->>>>>>> main
           
           <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Créer un compte</button>
         </form>

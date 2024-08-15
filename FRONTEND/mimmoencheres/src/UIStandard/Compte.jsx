@@ -168,30 +168,30 @@ const Compte = () => {
         <div>
           <h2 className="text-xl font-bold mb-4">Informations de l'utilisateur</h2>
           <div className="mb-2">
-            <label className="font-bold">Prénom:</label>
-            <p className="text-gray-700">{user.prenom}</p>
+            <label >Prénom:</label>
+            <p className="text-gray-700 font-bold">{user.prenom}</p>
           </div>
           <div className="mb-2">
-            <label className="font-bold">Nom:</label>
-            <p className="text-gray-700">{user.nom}</p>
+            <label >Nom:</label>
+            <p className="text-gray-700 font-bold">{user.nom}</p>
           </div>
           <div className="mb-2">
-            <label className="font-bold">Postnom:</label>
-            <p className="text-gray-700">{user.postnom}</p>
+            <label >Postnom:</label>
+            <p className="text-gray-700 font-bold">{user.postnom}</p>
           </div>
           <div className="mb-2">
-            <label className="font-bold">Adresse:</label>
-            <p className="text-gray-700">{user.adresse}</p>
+            <label >Adresse:</label>
+            <p className="text-gray-700 font-bold">{user.adresse}</p>
           </div>
           <div className="mb-2">
-            <label className="font-bold">Email:</label>
-            <p className="text-gray-700">{user.email}</p>
+            <label >Email:</label>
+            <p className="text-gray-700 font-bold">{user.email}</p>
           </div>
           <div className="mb-2">
-            <label className="font-bold">Téléphone:</label>
-            <p className="text-gray-700">{user.numeroTel}</p>
+            <label >Téléphone:</label>
+            <p className="text-gray-700 font-bold">{user.numeroTel}</p>
           </div>
-          {/* Ajouter d'autres informations selon les besoins */}
+          
         </div>
         </div>
     </div>

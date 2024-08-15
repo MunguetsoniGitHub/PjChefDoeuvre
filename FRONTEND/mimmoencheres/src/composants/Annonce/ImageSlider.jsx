@@ -29,7 +29,8 @@ const ImageSlider = ({ annonce, images, enchere, page,
     
       <SwiperSlide key={image.id}>
 
-        <img src={`http://localhost:3000/uploads/${image.lienImage}`} alt={annonce.titre} className="w-full" />
+        {/* <img src={`http://localhost:3000/uploads/${image.lienImage}`} alt={annonce.titre} className="w-full" /> */}
+        <img src={`${image.lienImage}`} alt={annonce.titre} className="w-full" />
 
       </SwiperSlide>
     ))}

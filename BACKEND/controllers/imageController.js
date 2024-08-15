@@ -12,14 +12,14 @@ const getImagesByAnnonceId = async (req, res) => {
       where: { annonceId: parseInt(annonceId, 10) }
     });
 
-    // Nettoyer le chemin des images
-    const cleanedImages = images.map(image => ({
-      ...image,
-      lienImage: image.lienImage.replace(/\\/g, '/')
-    }));
+    // // Nettoyer le chemin des images
+    // const cleanedImages = images.map(image => ({
+    //   ...image,
+    //   lienImage: image.lienImage.replace(/\\/g, '/')
+    // }));
 
-    res.status(200).json(cleanedImages);
-    // res.status(200).json(images);
+    // res.status(200).json(cleanedImages);
+    res.status(200).json(images);
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la récupération des images.' });
     console.error('Erreur lors de la récupération des images.', error);

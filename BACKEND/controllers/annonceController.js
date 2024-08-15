@@ -5,6 +5,20 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const path = require('path');
+
+  cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+
 
 const getAnnonceById = async (req, res) => {
   const data = req.params.id;
@@ -35,17 +49,51 @@ const createAnnonce = async (req, res) => {
         }
       );
        
+      // const imageFiles = req.files;
+      // console.log("fichier image reçu", imageFiles);
+      // if (imageFiles) {
+      //   const imagePromises = imageFiles.map(file => prisma.Image.create({
+      //     data: {
+      //       lienImage: file.path,
+      //       annonceId: newAnnonce.id,
+      //     }
+      //   }));
+      //   await Promise.all(imagePromises);
+      // }
+
+
+      // Fonction pour télécharger une image sur Cloudinary
+      const uploadToCloudinary = (fileBuffer) => {
+        return new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream((error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            });
+            uploadStream.end(fileBuffer);
+        });
+      };
+
+
+      // Traiter les fichiers image si présents
       const imageFiles = req.files;
-      console.log("fichier image reçu", imageFiles);
-      if (imageFiles) {
-        const imagePromises = imageFiles.map(file => prisma.Image.create({
-          data: {
-            lienImage: file.path,
-            annonceId: newAnnonce.id,
-          }
-        }));
-        await Promise.all(imagePromises);
+      if (imageFiles && imageFiles.length > 0) {
+          const imagePromises = imageFiles.map(async (file) => {
+              const result = await uploadToCloudinary(file.buffer);
+              return prisma.Image.create({
+                  data: {
+                      lienImage: result.secure_url,
+                      annonceId: newAnnonce.id,
+                  }
+              });
+          });
+
+          await Promise.all(imagePromises);
+          console.log("Images de l'annonce créées:", imagePromises);
       }
+
 
       // Création de l'enchère associée
       const newEnchere = await prisma.Enchere.create({
@@ -113,65 +161,14 @@ const getAllAnnonces = async (req, res) => {
   }
 };
 
-// const participate = async (req, res) => {
-//   const { utilisateurId, annonceId } = req.body;
-//   try {
-//     const participation = await prisma.Enchere.create({
-//       data: {
-//         utilisateurId: Number(utilisateurId),
-//         annonceId: Number(annonceId),
-//         montantEnchere: 0,
-//         dateEnchere: new Date(),
-//       },
-//     });
-//     res.status(201).json(participation);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Failed to participate' });
-//   }
-// };
-
-// const removeParticipation = async (req, res) => {
-//   const { utilisateurId, annonceId } = req.body;
-//   try {
-//     await prisma.Enchere.deleteMany({
-//       where: {
-//         utilisateurId: Number(utilisateurId),
-//         annonceId: Number(annonceId),
-//       },
-//     });
-//     res.status(200).json({ message: 'Participation removed' });
-//   } catch (error) {
-//     res.status(500).json({ error: 'Failed to remove participation' });
-//   }
-// };
-
-// const checkParticipation = async (req, res) => {
-//   const { utilisateurId, annonceId } = req.query;
-//   try {
-//     const participation = await prisma.Enchere.findFirst({
-//       where: {
-//         utilisateurId: Number(utilisateurId),
-//         annonceId: Number(annonceId),
-//       },
-//     });
-//     res.status(200).json({ participating: !!participation });
-//   } catch (error) {
-//     res.status(500).json({ error: 'Failed to check participation' });
-//   }
-// };
-
 
 module.exports = {
   getAnnonceById,
   createAnnonce,
   updateAnnonce,
   deleteAnnonce,
-  // annonceController,
   getAllAnnonces,
-  // participate,
-  // removeParticipation,
-  // checkParticipation,
-  
+  upload
 };
 
 

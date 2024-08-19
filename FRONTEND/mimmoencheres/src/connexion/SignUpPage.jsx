@@ -86,10 +86,7 @@ const SignUpPage = () => {
             <input type="text" name="prenom" placeholder="Prénom" {...register('prenom', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
             {errors.prenom && <span className="text-red-500">Ce champ est requis</span>}
           </div>
-          <div className="mb-4">
-            <input type="text" name="prenom" placeholder="Prénom" {...register('prenom', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
-            {errors.prenom && <span className="text-red-500">Ce champ est requis</span>}
-          </div>
+          
           <div className="mb-4">
             <input type="text" name="nom" placeholder="Nom" {...register('nom', { required: true })} className="border border-gray-300 p-2 w-full rounded" />
             {errors.nom && <span className="text-red-500">Ce champ est requis</span>}

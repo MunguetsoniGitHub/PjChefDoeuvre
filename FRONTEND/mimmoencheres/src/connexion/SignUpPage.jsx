@@ -52,8 +52,10 @@ const SignUpPage = () => {
 
     try {
       console.log('Submitting data:', data);
-      // const response = await axios.post('http://localhost:3000/api/utilisateurs', userData, {
-        const response = await axios.post('http://localhost:3000/api/utilisateurs', formData, {
+      // // const response = await axios.post('http://localhost:3000/api/utilisateurs', userData, {
+      //   const response = await axios.post('http://localhost:3000/api/utilisateurs', formData, {
+
+      const response = await axios.post('https://pjchefdoeuvre.onrender.com/api/utilisateurs', formData, {
         
         withCredentials: true,
         headers: {

@@ -42,8 +42,9 @@ const Annonce = ({ annonce, annonceId,
     // };
 
     const fetchOffres = async () => {
-      const response = await axios.get(`http://localhost:3000/api/offres/${annonceId}`);
-      // const response = await axios.get(`http://localhost:3000/api/offres/${enchereId}`);
+      // const response = await axios.get(`http://localhost:3000/api/offres/${annonceId}`);
+      // // const response = await axios.get(`http://localhost:3000/api/offres/${enchereId}`);
+      const response = await axios.get(`https://pjchefdoeuvre.onrender.com/api/offres/${annonceId}`);
       setOffres(response.data);
     };
 
@@ -57,8 +58,9 @@ const Annonce = ({ annonce, annonceId,
   const handleInscription = async () => {
     const utilisateurId= user.id;
     try {
-      await axios.post(`http://localhost:3000/api/enchere/${enchereId}/inscrire`, {
-      // await axios.post(`http://localhost:3000/api/enchere/${annonceId}/inscrire`, {
+      // await axios.post(`http://localhost:3000/api/enchere/${enchereId}/inscrire`, {
+      // // await axios.post(`http://localhost:3000/api/enchere/${annonceId}/inscrire`, {
+        await axios.post(`https://pjchefdoeuvre.onrender.com/api/enchere/${enchereId}/inscrire`, {
   
       utilisateurId, 
       // enchereId
@@ -79,7 +81,8 @@ const Annonce = ({ annonce, annonceId,
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/offre', {
+      // const response = await axios.post('http://localhost:3000/api/offre', {
+        const response = await axios.post('https://pjchefdoeuvre.onrender.com/api/offre', {
         montantOffre: nouvelleOffre,
         utilisateurId: user.id,
         // enchereId: enchere.id,

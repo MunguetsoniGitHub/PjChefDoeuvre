@@ -28,8 +28,9 @@ const Publier = () => {
     console.log('FormData avant envoi:', Array.from(formData.entries()));
 
     try {
-      const response = await axios.post("http://localhost:3000/api/annonces", formData, {
-      // const response = await axios.post("http://localhost:3000/api/annonces", data, {
+      // const response = await axios.post("http://localhost:3000/api/annonces", formData, {
+      // // const response = await axios.post("http://localhost:3000/api/annonces", data, {
+        const response = await axios.post("https://pjchefdoeuvre.onrender.com/api/annonces", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${user.token}`

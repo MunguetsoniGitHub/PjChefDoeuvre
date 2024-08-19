@@ -19,7 +19,8 @@ const AnnonceProvider = ({ children }) => {
       try {
 
           const [annoncesResponse] = await 
-          Promise.all([axios.get('http://localhost:3000/api/annonces')]);
+          // Promise.all([axios.get('http://localhost:3000/api/annonces')]);
+          Promise.all([axios.get('https://pjchefdoeuvre.onrender.com/api/annonces')]);
 
           setAnnonces(annoncesResponse.data);
 
@@ -28,7 +29,8 @@ const AnnonceProvider = ({ children }) => {
         // setAnnonces(annoncesData);
        
           const imagesPromises = annoncesResponse.data.map(annonce =>
-            axios.get(`http://localhost:3000/api/images/annonce/${annonce.id}`)
+            // axios.get(`http://localhost:3000/api/images/annonce/${annonce.id}`)
+            axios.get(`https://pjchefdoeuvre.onrender.com/api/images/annonce/${annonce.id}`)
           );
           // const imagesPromises = annoncesData.map(annonce =>
           //   Promise.all([ axios.get(`http://localhost:3000/api/images/annonce/${annonce.id}`) 
@@ -43,7 +45,9 @@ const AnnonceProvider = ({ children }) => {
         //   setAnnonces(annoncesWithImages);
 
         const encheresPromises = annoncesResponse.data.map(annonce => 
-           axios.get(`http://localhost:3000/api/enchere/${annonce.id}`) );
+          //  axios.get(`http://localhost:3000/api/enchere/${annonce.id}`) 
+          axios.get(`https://pjchefdoeuvre.onrender.com/api/enchere/${annonce.id}`) 
+          );
         const encheresResponses = await Promise.all(encheresPromises); 
 
         // const encheresData = annoncesData.flatMap(annonce => annonce.encheres);

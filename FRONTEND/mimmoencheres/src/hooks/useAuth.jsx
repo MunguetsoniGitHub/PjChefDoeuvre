@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", data, {
+      // const response = await axios.post("http://localhost:3000/api/auth/login", data, {
+        const response = await axios.post("https://pjchefdoeuvre.onrender.com/api/auth/login", data, {
         withCredentials: true });
 
 

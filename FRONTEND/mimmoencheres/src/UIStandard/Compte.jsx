@@ -25,14 +25,18 @@ const Compte = () => {
     const fetchEncheres = async () => {
       const userId = user.id;
       try {
-        // const response = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/encheres`);
-        const encheresResponses = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/encheres`);
+        // // const response = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/encheres`);
+        // const encheresResponses = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/encheres`);
+
+        const encheresResponses = await axios.get(`https://pjchefdoeuvre.onrender.com/api/utilisateurs/${userId}/encheres`);
+        
         // setEncheres(response.data);
         setEncheres(encheresResponses.data);
         // console.log(, "reponse de encheres");
 
         const imagesPromises = encheresResponses.data.map(enchere =>
-          axios.get(`http://localhost:3000/api/images/annonce/${enchere.annonceId}`)
+          // axios.get(`http://localhost:3000/api/images/annonce/${enchere.annonceId}`)
+          axios.get(`https://pjchefdoeuvre.onrender.com/api/images/annonce/${enchere.annonceId}`)
         );
         const imagesResponses = await Promise.all(imagesPromises);
 
@@ -58,14 +62,17 @@ const Compte = () => {
     const fetchAnnonces = async () => {
       const userId = user.id;
       try {
-        // const response = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/annonces`);
-        const annoncesResponse = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/annonces`);
+        // // const response = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/annonces`);
+        // const annoncesResponse = await axios.get(`http://localhost:3000/api/utilisateurs/${userId}/annonces`);
+        const annoncesResponse = await axios.get(`https://pjchefdoeuvre.onrender.com/api/utilisateurs/${userId}/annonces`);
+
         // setAnnonces(response.data);
         setAnnonces(annoncesResponse.data);
         console.log(annoncesResponse.data, 'données de annonces');
 
         const imagesPromises = annoncesResponse.data.map(annonce =>
-          axios.get(`http://localhost:3000/api/images/annonce/${annonce.id}`)
+          // axios.get(`http://localhost:3000/api/images/annonce/${annonce.id}`)
+          axios.get(`https://pjchefdoeuvre.onrender.com/api/images/annonce/${annonce.id}`)
         );
         const imagesResponses = await Promise.all(imagesPromises);
 

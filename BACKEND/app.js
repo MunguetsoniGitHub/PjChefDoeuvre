@@ -45,15 +45,27 @@ app.listen(PORT, () => {
 // Middleware pour traiter les données au format JSON
 app.use(express.json());
 
-app.use(cors({
-  // origin: 'http://localhost:5173',
-  origin: 'https://mimmoencheres.netlify.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  credentials: true
-}));
+// app.use(cors({
+//   // origin: 'http://localhost:5173',
+//   origin: 'https://mimmoencheres.netlify.app',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+//   credentials: true
+// }));
 
 // Autoriser les requêtes CORS de tous les domaines (à adapter selon vos besoins)
 // app.use(cors());
+
+const corsOptions = {
+  origin: 'https://mimmoencheres.netlify.app', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  
+  allowedHeaders: ['Content-Type', 'Authorization'], 
+  credentials: true, // Si vous utilisez des cookies ou des sessions
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Répondre aux préflights
+
+
 
 app.use('/api/auth', authRoutes);
 

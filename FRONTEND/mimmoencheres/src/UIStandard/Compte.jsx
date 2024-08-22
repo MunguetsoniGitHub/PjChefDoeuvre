@@ -2,8 +2,8 @@
 import watson from '../assets/watson.png'
 
 import React, { useContext, useEffect, useState } from "react";
-import Annonce from '../composants/AnnonceForUser';
-// import Annonce from '../composants/Annonces';
+// import Annonce from '../composants/AnnonceForUser';
+import Annonce from '../composants/Annonces';
 import { useAuth } from '../hooks/useAuth';
 import { AnnonceContext } from '../context/AnnonceContext';
 

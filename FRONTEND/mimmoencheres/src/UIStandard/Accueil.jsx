@@ -10,7 +10,7 @@ const Accueil = () => {
 
     return(
     <div className=" flex flex-col h-max bg-gray-100">
-      <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white h-96 px-40 flex flex-row gap-6"  style={{ backgroundImage: 'url("https://res.cloudinary.com/djlamvqne/image/upload/v1720194581/maedev/lvrhhn7czavwtitav6u2.png")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }} >
+      <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white h-96 px-40 flex flex-row gap-6"  style={{ backgroundImage: 'url("https://res.cloudinary.com/maecd11/image/upload/v1720194581/maedev/lvrhhn7czavwtitav6u2.png")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }} >
       
         <div className="border-solid border-2 shadow-md rounded-lg p-4 h-48 w-450px absolute bottom-1/4 left-72 bg-gray-mae flex items-center">
             <h3 className="text-red-mae font-bold mb-2 font-kaushan text-center text-3xl">Profiter d'une meilleure expérience sur notre plateforme des ventes immobilières aux enchères. </h3>
@@ -35,7 +35,7 @@ const Accueil = () => {
         </div>
       </div>
 
-      <div className="container mx-auto gap-6 py-12 px-40 flex h-56 text-center items-center"  style={{ backgroundImage: 'url("https://res.cloudinary.com/djlamvqne/image/upload/v1720176204/maedev/zsrkqfagmxt5au6lfvc0.jpg")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'  }} >
+      <div className="container mx-auto gap-6 py-12 px-40 flex h-56 text-center items-center"  style={{ backgroundImage: 'url("https://res.cloudinary.com/maecd11/image/upload/v1720176204/maedev/zsrkqfagmxt5au6lfvc0.jpg")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'  }} >
         
         <div className="border-solid border-2 border-white shadow-md rounded-lg p-4">
             <h3 className="text-white font-bold mb-2">Profiter d'une meilleure expérience sur notre plateforme des ventes immobilières aux enchères. </h3>

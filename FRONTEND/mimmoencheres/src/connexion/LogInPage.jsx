@@ -24,7 +24,7 @@ export const LogInPage = () => {
     
     <div className="flex w-screen h-screen max-h-full bg-white">
       
-      <div className="w-1/2 h-full bg-cover bg-center rounded-r-full" style={{ backgroundImage: 'url("https://res.cloudinary.com/djlamvqne/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}>
+      <div className="w-1/2 h-full bg-cover bg-center rounded-r-full" style={{ backgroundImage: 'url("https://res.cloudinary.com/maecd11/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}>
       </div>
 
       <div className="w-1/2 h-full flex items-center justify-center p-6 bg-white">

@@ -28,7 +28,7 @@ return (
        {/* <nav className="w-screen fixed top-0 left-0 flex justify-between items-center bg-white p-4 text-black  shadow-lg"> */}
        <nav className="w-full fixed top-0 left-0 flex justify-between items-center bg-white p-4 text-black shadow-lg z-10">
         {/* <span className="text-lg "> */}
-          <img src={"https://res.cloudinary.com/djlamvqne/image/upload/v1720194618/maedev/aquo122gt3x5mjuctj2y.png"} alt="logo"/> 
+          <img src={"https://res.cloudinary.com/maecd11/image/upload/v1720194618/maedev/aquo122gt3x5mjuctj2y.png"} alt="logo"/> 
           {/* </span> */}
         <div className="hidden md:flex space-x-4 ">
             {/* <NavLink to="/" activeClassName="active" className="hover:text-red-500 text-lg text-black">Accueil</NavLink>

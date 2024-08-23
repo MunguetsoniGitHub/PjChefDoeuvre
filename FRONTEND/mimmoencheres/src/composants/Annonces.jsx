@@ -45,7 +45,7 @@ const Annonce = ({ annonce, annonceId,
 
     const checkParticipation = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/enchere/${enchereId}/participation/${user.id}`);
+        const response = await axios.get(`https://pjchefdoeuvre.onrender.com/${enchereId}/participation/${user.id}`);
         setIsParticipant(response.data.isParticipant);
       } catch (error) {
         console.error(error);

@@ -81,19 +81,22 @@ const inscrireEnchere = async (req, res) => {
       return res.status(404).json({ error: 'Enchère non trouvée' });
     }
 
-    // await prisma.Enchere.update({
-    //   where: { id: enchereId },
-    //   data: {
-    //     utilisateurId: utilisateurId,
-    //   },
-    // });
-    // await prisma.Enchere.create({
-    //   // where: { id: parseInt(enchereId) },
-    //   where: { annonceId: parseInt(annonceId) },
-    //   data: {
-    //     utilisateurId: parseInt(utilisateurId),
-    //   },
-    // });
+    // Vérifier si l'utilisateur est déjà inscrit à cette enchère
+    const participationExistante = await prisma.Participation.findUnique({
+      where: {
+        utilisateurId_enchereId: {
+          utilisateurId: parseInt(utilisateurId),
+          enchereId: parseInt(enchereId),
+        },
+      },
+    });
+
+    if (participationExistante) {
+      // Si l'utilisateur est déjà inscrit, renvoyez un message ou une erreur
+      return res.status(400).json({ error: 'Utilisateur déjà inscrit à cette enchère' });
+    }
+
+    // Sinon, inscrire l'utilisateur à l'enchère
 
     await prisma.Enchere.update({
       where: { id: parseInt(enchereId) },
@@ -118,26 +121,27 @@ const inscrireEnchere = async (req, res) => {
   }
 };
 
-// // Récupérer les détails d'une enchère
-// const getEnchereDetails = async (req, res) => {
-//   try {
-//     const enchere = await prisma.Enchere.findUnique({
-//       where: { id: parseInt(req.params.annonceId) },
-//       // where: { id: parseInt(req.params.enchereId) },
+const verifierParticipation = async (req, res) => {
+  const { enchereId, utilisateurId } = req.params;
 
-//       // include: { utilisateur: true } // Inclure l'utilisateur qui a créé l'enchère
-//       // include: { utilisateurId: true, annonceId : true  
-//       // } // Inclure l'utilisateur et l'annonce associés à l'enchère
-//     });
-//     if (!enchere) {
-//       return res.status(404).json({ error: 'Enchère non trouvée' });
-//     }
-//     res.json(enchere);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Erreur serveur' });
-//   }
-// };
+  try {
+    const participation = await prisma.Participation.findUnique({
+      where: {
+        utilisateurId_enchereId: {
+          utilisateurId: parseInt(utilisateurId),
+          enchereId: parseInt(enchereId),
+        },
+      },
+    });
+
+    const isParticipant = participation ? true : false;
+
+    res.status(200).json({ isParticipant });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 // Récupérer les détails d'une enchère
 const getEnchereDetails = async (req, res) => {
@@ -177,29 +181,6 @@ const getOffres = async (req, res) => {
   }
 };
 
-// // Inscription à une enchère
-// const inscrireEnchere = async (req, res) => {
-//   try {
-//     const { utilisateurId } = req.body;
-//     const enchere = await prisma.Enchere.findUnique({
-//       where: { id: parseInt(req.params.annonceId) },
-//     });
-//     if (!enchere) {
-//       return res.status(404).json({ error: 'Enchère non trouvée' });
-//     }
-//     await prisma.Participation.create({
-//       data: {
-//         utilisateurId,
-//         enchereId: enchere.id,
-//       },
-//     });
-//     res.status(201).json({ message: 'Inscription réussie' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Erreur serveur' });
-//   }
-// };
-
 module.exports = {enchereController, 
   // inscrireUtilisateur, 
-  getEnchereDetails, getOffres,inscrireEnchere};
+  getEnchereDetails, getOffres,inscrireEnchere, verifierParticipation};

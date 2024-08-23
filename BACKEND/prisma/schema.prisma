@@ -39,6 +39,7 @@ model Utilisateur {
   encheres Enchere[]
 
   participation Participation[]
+  createdAt     DateTime @default(now())
 }
 
 model Annonce {
@@ -53,6 +54,7 @@ model Annonce {
   images             Image[]
   encheres           Enchere[]
   demandesValidation DemandeValidation[]
+  createdAt     DateTime @default(now())
 }
 
 model Enchere {
@@ -68,6 +70,7 @@ model Enchere {
   offres            Offre[]
 
   participations Participation[]
+  createdAt     DateTime @default(now())
 }
 
 model Offre {
@@ -79,6 +82,7 @@ model Offre {
   enchere             Enchere     @relation(fields: [enchereId], references: [id])
   enchereId           Int
   paiementsAcompte    PaiementsAcompte[]
+  createdAt     DateTime @default(now())
 }
 
 model Image {
@@ -120,4 +124,7 @@ model Participation {
   enchereId    Int
   utilisateur  Utilisateur @relation(fields: [utilisateurId], references: [id])
   enchere      Enchere   @relation(fields: [enchereId], references: [id])
+  createdAt     DateTime @default(now())
+  
+  @@unique([utilisateurId, enchereId]) // Clé composite unique mais pas primaire
 }

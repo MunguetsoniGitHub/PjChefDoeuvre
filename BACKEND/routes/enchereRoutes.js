@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const {enchereController, 
     // inscrireUtilisateur
-    getEnchereDetails, getOffres, inscrireEnchere } = require('../controllers/enchereController');
+    getEnchereDetails, getOffres, inscrireEnchere, verifierParticipation } = require('../controllers/enchereController');
 
 router.get('/', enchereController.getAllEncheres);
 router.get('/:id', enchereController.getEnchereById);
@@ -23,5 +23,9 @@ router.get('/offres/:annonceId', getOffres);
 
 // router.post('/enchere/:annonceId/inscrire', inscrireEnchere);
 router.post('/enchere/:enchereId/inscrire', inscrireEnchere);
+
+
+// Route pour vérifier la participation d'un utilisateur à une enchère
+router.get('/enchere/:enchereId/participation/:utilisateurId', verifierParticipation);
 
 module.exports = router;

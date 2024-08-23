@@ -35,11 +35,6 @@ const Annonce = ({ annonce, annonceId,
   const [isParticipant, setIsParticipant] = useState(false);
 
   useEffect(() => {
-    // const fetchEnchere = async () => {
-    //   const response = await axios.get(`http://localhost:3000/api/enchere/${annonceId}`); 
-    //   // const response = await axios.get(`http://localhost:3000/api/enchere/${enchereId}`);
-    //   setEnchere(response.data);
-    // };
 
     const fetchOffres = async () => {
       // const response = await axios.get(`http://localhost:3000/api/offres/${annonceId}`);
@@ -48,12 +43,18 @@ const Annonce = ({ annonce, annonceId,
       setOffres(response.data);
     };
 
-    // fetchEnchere();
+    const checkParticipation = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/enchere/${enchereId}/participation/${user.id}`);
+        setIsParticipant(response.data.isParticipant);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
     fetchOffres();
-  }, 
-  [annonceId]
-  // [annonceId,enchereId]
-  );
+    checkParticipation();
+  },[annonceId, enchereId, user.id]);
 
   const handleInscription = async () => {
     const utilisateurId= user.id;
@@ -100,11 +101,8 @@ const Annonce = ({ annonce, annonceId,
       <ImageSlider annonce={annonce} images={images} enchere={enchere} />
       <AnnonceDetails  annonce={annonce} page={page}
         // utilisateurId={utilisateurId} setParticipated={setParticipated}  
-        enchere={enchere}
-        handleInscription={handleInscription} isParticipant={isParticipant}
-         />
+        enchere={enchere} handleInscription={handleInscription} isParticipant={isParticipant} />
 
-      {/* {page === 'compte' && participated && ( */}
       {page === 'compte' && isParticipant && (
         <>
           <MeilleureOffre 

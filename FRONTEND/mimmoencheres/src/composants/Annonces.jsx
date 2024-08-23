@@ -97,28 +97,30 @@ const Annonce = ({ annonce, annonceId,
   };
 
   return (
-    <div className={`max-w-4xl mx-auto my-8 px-4 ${page === 'encheres' ? 'w-1/3' : ''}`}>
+    <div className={`w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-2 my-4`}>
       <ImageSlider annonce={annonce} images={images} enchere={enchere} />
-      <AnnonceDetails  annonce={annonce} page={page}
-        // utilisateurId={utilisateurId} setParticipated={setParticipated}  
-        enchere={enchere} handleInscription={handleInscription} isParticipant={isParticipant} />
-
+      <AnnonceDetails
+        annonce={annonce}
+        page={page}
+        enchere={enchere}
+        handleInscription={handleInscription}
+        isParticipant={isParticipant}
+      />
       {page === 'compte' && isParticipant && (
         <>
-          <MeilleureOffre 
-          // meilleureOffre={annonce.meilleureOffre} 
-          enchere={enchere}
-          nouvelleOffre={nouvelleOffre}
-        setNouvelleOffre={setNouvelleOffre}
-        handleOffreSubmit={handleOffreSubmit}
-        isParticipant={isParticipant}
+          <MeilleureOffre
+            enchere={enchere}
+            nouvelleOffre={nouvelleOffre}
+            setNouvelleOffre={setNouvelleOffre}
+            handleOffreSubmit={handleOffreSubmit}
+            isParticipant={isParticipant}
           />
-          {/* <Participants participants={annonce.participants} /> */}
         </>
       )}
       <Description />
     </div>
   );
+  
 };
 
 export default Annonce;

@@ -8,6 +8,7 @@ import { routes } from '../routes';
 const UIStandard = () => {
   
   const { logout } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();

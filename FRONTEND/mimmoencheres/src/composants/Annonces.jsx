@@ -97,27 +97,55 @@ const Annonce = ({ annonce, annonceId,
   };
 
   return (
-    <div className={`w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-2 my-4`}>
-      <ImageSlider annonce={annonce} images={images} enchere={enchere} />
-      <AnnonceDetails
-        annonce={annonce}
-        page={page}
-        enchere={enchere}
-        handleInscription={handleInscription}
-        isParticipant={isParticipant}
-      />
-      {page === 'compte' && isParticipant && (
+    <div className={`flex flex-col w-full ${page === 'compte' ? 'w-full' : 'sm:w-1/2 lg:w-1/3 xl:w-1/4 px-2 my-4 min-w-[300px]'}`}>
+      {page === 'compte' ? (
+        <div className="flex flex-col">
+          <div className="flex flex-row justify-between">
+            <ImageSlider annonce={annonce} images={images} enchere={enchere} />
+            <AnnonceDetails
+              annonce={annonce}
+              page={page}
+              enchere={enchere}
+              handleInscription={handleInscription}
+              isParticipant={isParticipant}
+            />
+          </div>
+          <div>
+            <MeilleureOffre
+              enchere={enchere}
+              nouvelleOffre={nouvelleOffre}
+              setNouvelleOffre={setNouvelleOffre}
+              handleOffreSubmit={handleOffreSubmit}
+              isParticipant={isParticipant}
+            />
+
+            <Description annonce={annonce} />
+          </div>
+        </div>
+      ) : (
         <>
-          <MeilleureOffre
+          <div className= {` flex-grow`}  >
+          <ImageSlider annonce={annonce} images={images} enchere={enchere} />
+          <AnnonceDetails
+            annonce={annonce}
+            page={page}
             enchere={enchere}
-            nouvelleOffre={nouvelleOffre}
-            setNouvelleOffre={setNouvelleOffre}
-            handleOffreSubmit={handleOffreSubmit}
+            handleInscription={handleInscription}
             isParticipant={isParticipant}
           />
+          </div>
+          {page === 'compte' && isParticipant && (
+            <MeilleureOffre
+              enchere={enchere}
+              nouvelleOffre={nouvelleOffre}
+              setNouvelleOffre={setNouvelleOffre}
+              handleOffreSubmit={handleOffreSubmit}
+              isParticipant={isParticipant}
+            />
+          )}
+          <Description annonce={annonce} />
         </>
       )}
-      <Description />
     </div>
   );
   

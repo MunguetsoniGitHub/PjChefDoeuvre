@@ -12,8 +12,7 @@ const Encheres = () => {
     if (error) return <p>Error fetching annonces: {error.message}</p>;
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 px-4 md:px-40 overflow-x-hidden">
-            <h1 className="text-2xl font-bold mt-6 mb-4">Enchères</h1>
+        <div className="flex flex-col h-full bg-gray-100 px-4 md:px-28 overflow-x-hidden">
             
             {/* Bouton pour afficher/masquer la recherche */}
             <button 
@@ -56,7 +55,7 @@ const Encheres = () => {
                 </form>
             )}
 
-                <div className="flex flex-wrap -mx-2">
+                <div className="flex flex-wrap ">
                   {annonces.map((annonce) =>
                     annonce.encheres.map((enchere) => (
                       <Annonce

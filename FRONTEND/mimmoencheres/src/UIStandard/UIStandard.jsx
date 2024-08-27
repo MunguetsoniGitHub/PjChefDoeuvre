@@ -13,6 +13,9 @@ const UIStandard = () => {
     logout();
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
    // Trouver les enfants des routes du tableau de bord qui sont protégés
   //  const dashboardRoute = routes.find(route => route.path === '/dashboard');
   //  const protectedRoutes = dashboardRoute?.children.filter(route => route.protected) || [];

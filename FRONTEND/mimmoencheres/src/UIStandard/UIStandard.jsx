@@ -32,7 +32,7 @@ return (
         <nav className="w-full fixed top-0 left-0 flex justify-between items-center bg-white p-4 text-black shadow-lg z-10">
           {/* Logo */}
           <img
-            src={"https://res.cloudinary.com/djlamvqne/image/upload/v1720194618/maedev/aquo122gt3x5mjuctj2y.png"}
+            src={"https://res.cloudinary.com/maecd11/image/upload/v1720194618/maedev/aquo122gt3x5mjuctj2y.png"}
             alt="logo"
             className="h-8"
           />

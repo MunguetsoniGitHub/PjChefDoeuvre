@@ -1,5 +1,3 @@
-// import MimmoEncheres from '../assets/MimmoEncheres.png'
-
 import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -58,9 +56,16 @@ return (
             </button>
           </div>
 
-          {/* Menu déroulant avec seulement le bouton Déconnexion */}
+          {/* Menu déroulant avec options supplémentaires */}
           {isMenuOpen && (
             <div className="absolute top-full right-0 bg-white shadow-lg z-20 p-4 flex flex-col space-y-2 md:hidden">
+              <NavLink
+                to={`/dashboard/infos-utilisateur`}
+                className="hover:text-red-500 text-black"
+                onClick={toggleMenu}
+              >
+                Mes Informations
+              </NavLink>
               <button onClick={handleLogout} className="text-red-500">
                 Déconnexion
               </button>

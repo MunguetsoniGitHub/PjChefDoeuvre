@@ -12,6 +12,8 @@ import Apropos from './UIStandard/Apropos';
 
 import  ProtectedRoute from './connexion/ProtectedRoute';
 
+import InfosUtilisateur from './UIStandard/InfosUtilisateur';
+
 export const routes = [
   // {
   //   path: '/',
@@ -52,6 +54,8 @@ export const routes = [
         name: 'Compte' },
       { path: 'apropos', element: Apropos , protected: true,
         name: 'À propos' },
+
+      { path: 'infos-utilisateur', element: InfosUtilisateur, protected: true }
   //   ],
   // },
 ];

@@ -3,6 +3,9 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { routes } from '../routes';
 
+import { MdMenuOpen } from "react-icons/md";
+import { PiCaretLeftBold } from "react-icons/pi";
+
 const UIStandard = () => {
   
   const { logout } = useAuth();

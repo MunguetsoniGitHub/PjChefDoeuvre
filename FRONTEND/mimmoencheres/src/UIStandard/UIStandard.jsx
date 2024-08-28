@@ -50,27 +50,30 @@ return (
           </div>
 
           {/* Bouton Menu pour mobile */}
-          <div className="md:hidden">
-            <button onClick={toggleMenu} className="text-black">
-              Menu
-            </button>
-          </div>
+          
+          <MdMenuOpen onClick={toggleMenu} className="md:hidden"/>
 
           {/* Menu déroulant avec options supplémentaires */}
           {isMenuOpen && (
-            <div className="absolute top-full right-0 bg-white shadow-lg z-20 p-4 flex flex-col space-y-2 md:hidden">
+            <div className="fixed inset-0 bg-white z-20 flex flex-col justify-center items-center space-y-4 md:hidden">
+              {/* Bouton de retour */}
+              
+              <PiCaretLeftBold onClick={toggleMenu} className="absolute top-4 left-4 " />
+              
               <NavLink
                 to={`/dashboard/infos-utilisateur`}
-                className="hover:text-red-500 text-black"
+                className="hover:text-red-500 text-black text-xl"
                 onClick={toggleMenu}
               >
                 Mes Informations
               </NavLink>
-              <button onClick={handleLogout} className="text-red-500">
+              
+              <p onClick={handleLogout} className="text-red-500 text-xl">
                 Déconnexion
-              </button>
+              </p>
             </div>
           )}
+
 
           {/* Bouton Déconnexion pour écrans plus grands */}
           <button onClick={handleLogout} className="hidden md:block text-red-500">

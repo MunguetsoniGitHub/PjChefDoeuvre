@@ -135,7 +135,7 @@ const Compte = () => {
               
 
       {/* Section centrale en plein écran si mobile */}
-      <div className={`flex-1 rounded-lg shadow-md p-4 overflow-auto ${isMobile ? 'w-full' : ''}`}>
+      <div className={`flex-1 rounded-lg shadow-md flex flex-wrap p-4 overflow-auto gap-5 ${isMobile ? 'w-full' : ''}`}>
         <h2 className="text-xl font-bold mb-4">Mes participations aux Enchères</h2>
         {encheres?.map((enchere) => (
           <Annonce key={enchere.id} annonce={enchere.annonce} page="compte" images={enchere.images} enchere={enchere} annonceId={enchere.annonceId} />

@@ -99,8 +99,37 @@ const Annonce = ({ annonce, annonceId,
   return (
     <div className={`flex flex-col w-full ${page === 'compte' ? 'w-full' : 'sm:w-1/2 lg:w-1/3 xl:w-1/4 px-2 my-4 min-w-[300px]'}`}>
       {page === 'compte' ? (
-        <div className="flex flex-col">
-          <div className="flex flex-row justify-between">
+        <div className="flex flex-col space-y-4">
+        {/* Structure en colonne sur petits écrans, ligne à partir de md */}
+        <div className="flex-grow md:flex md:flex-row md:space-x-4">
+          
+            <ImageSlider annonce={annonce} images={images} enchere={enchere} />
+          
+            <AnnonceDetails
+              annonce={annonce}
+              page={page}
+              enchere={enchere}
+              handleInscription={handleInscription}
+              isParticipant={isParticipant}
+            />
+         
+        </div>
+  
+        {/* MeilleureOffre et Description toujours en colonne */}
+        <div className="flex flex-col space-y-4">
+          <MeilleureOffre
+            enchere={enchere}
+            nouvelleOffre={nouvelleOffre}
+            setNouvelleOffre={setNouvelleOffre}
+            handleOffreSubmit={handleOffreSubmit}
+            isParticipant={isParticipant}
+          />
+          <Description annonce={annonce} />
+        </div>
+      </div>
+      ) : (
+        <>
+          <div className="flex-grow">
             <ImageSlider annonce={annonce} images={images} enchere={enchere} />
             <AnnonceDetails
               annonce={annonce}
@@ -109,30 +138,6 @@ const Annonce = ({ annonce, annonceId,
               handleInscription={handleInscription}
               isParticipant={isParticipant}
             />
-          </div>
-          <div>
-            <MeilleureOffre
-              enchere={enchere}
-              nouvelleOffre={nouvelleOffre}
-              setNouvelleOffre={setNouvelleOffre}
-              handleOffreSubmit={handleOffreSubmit}
-              isParticipant={isParticipant}
-            />
-
-            <Description annonce={annonce} />
-          </div>
-        </div>
-      ) : (
-        <>
-          <div className= {` flex-grow`}  >
-          <ImageSlider annonce={annonce} images={images} enchere={enchere} />
-          <AnnonceDetails
-            annonce={annonce}
-            page={page}
-            enchere={enchere}
-            handleInscription={handleInscription}
-            isParticipant={isParticipant}
-          />
           </div>
           {page === 'compte' && isParticipant && (
             <MeilleureOffre

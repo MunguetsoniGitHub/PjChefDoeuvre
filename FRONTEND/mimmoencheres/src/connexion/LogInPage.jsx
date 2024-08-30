@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useForm } from 'react-hook-form';
 
 export const LogInPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { login } = useAuth();
 
   const navigate = useNavigate();
@@ -13,6 +13,8 @@ export const LogInPage = () => {
     try {
       console.log("Form data:", data);
       await login(data);
+      reset();
+      alert("Vous êtes connecté ! Cliquez sur OK pour continuer");
       navigate('/dashboard');
     } catch (error) {
       console.error("Login error", error);

@@ -31,7 +31,7 @@ export const LogInPage = () => {
   }, []);
   
   return (
-    <div className="flex w-screen h-screen h-full bg-white overflow-hidden">
+    <div className="flex w-screen h-screen h-full bg-gray-100 overflow-hidden">
     <div className="w-full h-screen flex flex-col md:flex-row">
       <div 
         className={`h-full w-full md:w-1/2 bg-cover bg-center bg-fixed flex items-center justify-center ${isMobile ? 'p-6 overflow-y-scroll' : 'rounded-r-full'}`}
@@ -39,7 +39,7 @@ export const LogInPage = () => {
       >
         {isMobile ? (
           <div className="w-full max-w-lg mx-auto p-6 rounded">
-            <h2 className="text-2xl mb-4">Se connecter</h2>
+            <h2 className="text-2xl mb-4 text-center text-white">Se connecter</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <input
@@ -61,26 +61,26 @@ export const LogInPage = () => {
                 />
                 {errors.motDePasse && <p className="text-red-500 text-sm">{errors.motDePasse.message}</p>}
               </div>
-              <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Connexion
+              <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded">
+                Se Connecter
               </button>
             </form>
             <div className="mt-4">
-              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              <button className="bg-red-500 hover:bg-red-700 text-white w-full font-bold py-2 px-4 rounded">
                 Connexion avec Google
               </button>
             </div>
             <div className="mt-2 text-center">
-              <Link to="/signup" className="text-blue-500 hover:underline">Créer un compte</Link>
+              <Link to="/signup" className="text-gray-500 hover:underline">Créer un compte</Link>
             </div>
           </div>
         ) : null}
       </div>
 
       {!isMobile && (
-        <div className="w-1/2 h-full flex items-center justify-center p-6 overflow-y-scroll bg-white">
+        <div className="w-1/2 h-full flex items-center justify-center p-6 overflow-y-scroll ">
           <div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
-            <h2 className="text-2xl mb-4">Se connecter</h2>
+            <h2 className="text-2xl mb-4 text-center">Se connecter</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <input
@@ -102,17 +102,17 @@ export const LogInPage = () => {
                 />
                 {errors.motDePasse && <p className="text-red-500 text-sm">{errors.motDePasse.message}</p>}
               </div>
-              <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Connexion
+              <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded">
+                Se Connecter
               </button>
             </form>
             <div className="mt-4">
-              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              <button className="bg-red-500 hover:bg-red-700 text-white w-full font-bold py-2 px-4 rounded">
                 Connexion avec Google
               </button>
             </div>
             <div className="mt-2 text-center">
-              <Link to="/signup" className="text-blue-500 hover:underline">Créer un compte</Link>
+              <Link to="/signup" className="text-gray-500 hover:underline">Créer un compte</Link>
             </div>
           </div>
         </div>

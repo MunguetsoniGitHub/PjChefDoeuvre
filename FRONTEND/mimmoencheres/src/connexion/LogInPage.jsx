@@ -30,17 +30,13 @@ export const LogInPage = () => {
   
   return (
     <div className="flex w-screen h-screen h-full bg-white overflow-hidden">
-      
-      {/* Container global, qui change de structure selon la taille de l'écran */}
-      <div className="w-full h-screen flex flex-col md:flex-row">
-        
-        {/* Image de fond, avec le formulaire en mode responsive */}
-        <div 
-          className={`h-full w-full md:w-1/2 bg-cover bg-center bg-fixed flex items-center justify-center ${isMobile ? 'p-6 overflow-y-scroll' : 'rounded-r-full'}`}
-          style={{ backgroundImage: 'url("https://res.cloudinary.com/maecd11/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}
-        >
-          {/* Formulaire de connexion en mode responsive */}
-          <div className={`w-full max-w-lg mx-auto p-6  rounded  ${!isMobile ? 'hidden' : ''}`}>
+    <div className="w-full h-screen flex flex-col md:flex-row">
+      <div 
+        className={`h-full w-full md:w-1/2 bg-cover bg-center bg-fixed flex items-center justify-center ${isMobile ? 'p-6 overflow-y-scroll' : 'rounded-r-full'}`}
+        style={{ backgroundImage: 'url("https://res.cloudinary.com/maecd11/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}
+      >
+        {isMobile ? (
+          <div className="w-full max-w-lg mx-auto p-6 rounded">
             <h2 className="text-2xl mb-4">Se connecter</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
@@ -76,10 +72,11 @@ export const LogInPage = () => {
               <Link to="/signup" className="text-blue-500 hover:underline">Créer un compte</Link>
             </div>
           </div>
-        </div>
-  
-        {/* Formulaire de connexion en mode desktop, caché en mode responsive */}
-        <div className={`w-1/2 h-full flex items-center justify-center p-6 overflow-y-scroll bg-white ${isMobile ? 'hidden' : ''}`}>
+        ) : null}
+      </div>
+
+      {!isMobile && (
+        <div className="w-1/2 h-full flex items-center justify-center p-6 overflow-y-scroll bg-white">
           <div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
             <h2 className="text-2xl mb-4">Se connecter</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -117,8 +114,9 @@ export const LogInPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
+  </div>
   );
 };
 

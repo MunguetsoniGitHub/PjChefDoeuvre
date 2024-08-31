@@ -82,14 +82,14 @@ const SignUpPage = () => {
   }, []);
 
   return (
-    <div className="flex w-screen h-screen h-full bg-gray-100 overflow-hidden">
-    <div className="w-full h-screen flex flex-col md:flex-row">
+    <div className="flex w-screen h-full bg-gray-100 overflow-hidden flex-col md:flex-row md:items-center">
+    {/* <div className="w-screen h-full flex flex-col md:flex-row md:items-center "> */}
       <div 
-        className={`h-full w-full md:w-1/2 bg-cover bg-center bg-fixed flex items-center justify-center ${isMobile ? 'p-6 overflow-y-scroll' : 'rounded-r-full'}`}
+        className={`h-full md:h-screen w-full md:w-1/2 bg-cover bg-center bg-fixed flex items-center justify-center ${isMobile ? 'px-6 py-12  overflow-y-scroll' : 'rounded-r-full'}`}
         style={{ backgroundImage: 'url("https://res.cloudinary.com/maecd11/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}
       >
         {isMobile ? (
-          <div className="w-full max-w-lg mx-auto p-6 rounded flex flex-col item-center">
+          <div className="w-full max-w-lg mx-auto  rounded flex flex-col item-center">
             <h2 className="text-2xl mb-4 text-center text-white ">Créer un compte</h2>
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                   <div className="mb-4">
@@ -153,7 +153,7 @@ const SignUpPage = () => {
       </div>
 
       {!isMobile && (
-        <div className="w-1/2 h-full flex items-center justify-center px-6 overflow-y-scroll ">
+        <div className="w-1/2  h-full flex items-center justify-center  overflow-y-scroll py-12">
           <div className="max-w-lg mx-auto p-6 bg-white rounded shadow flex flex-col align-center ">
           <h2 className="text-2xl mb-4 text-center">Créer un compte</h2>
             <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -216,7 +216,7 @@ const SignUpPage = () => {
           </div>
         </div>
       )}
-    </div>
+    {/* </div> */}
   </div>
   );
 };

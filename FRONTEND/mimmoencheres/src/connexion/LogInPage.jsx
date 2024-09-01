@@ -9,16 +9,21 @@ export const LogInPage = () => {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async (data) => {
+    setLoading(true); // Début du chargement
     try {
       console.log("Form data:", data);
       await login(data);
       reset();
-      alert("Vous êtes connecté ! Cliquez sur OK pour continuer");
+      
       navigate('/dashboard');
     } catch (error) {
       console.error("Login error", error);
       alert("Invalid email or password");
+    } finally {
+      setLoading(false); // Fin du chargement
     }
   };
 
@@ -29,6 +34,13 @@ export const LogInPage = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  if (loading) return (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <div className="w-6 h-6 border-4 border-t-4 border-t-transparent border-black rounded-full animate-spin"></div>
+      <span className="ml-2">Chargement...</span>
+    </div>
+    );
   
   return (
     <div className="flex w-screen h-screen h-full bg-gray-100 overflow-hidden">
@@ -61,7 +73,7 @@ export const LogInPage = () => {
                 />
                 {errors.motDePasse && <p className="text-red-500 text-sm">{errors.motDePasse.message}</p>}
               </div>
-              <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded">
+              <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded" disabled={loading}>
                 Se Connecter
               </button>
             </form>
@@ -102,8 +114,11 @@ export const LogInPage = () => {
                 />
                 {errors.motDePasse && <p className="text-red-500 text-sm">{errors.motDePasse.message}</p>}
               </div>
-              <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded">
-                Se Connecter
+              <button type="submit" 
+                      className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded"
+                      disabled={loading}
+              >
+                  Se connecter
               </button>
             </form>
             <div className="mt-4">

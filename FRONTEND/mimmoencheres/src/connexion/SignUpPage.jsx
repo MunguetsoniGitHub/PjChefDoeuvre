@@ -10,6 +10,8 @@ const SignUpPage = () => {
 
   const [profileImage, setProfileImage] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async (data) => {
 
     if (data.motDePasse !== data.confirmationMotDePasse) {
@@ -49,7 +51,7 @@ const SignUpPage = () => {
       formData.append('profileImage', data.profileImage[0]);
     }
     
-
+    setLoading(true); // Début du chargement
     try {
       console.log('Submitting data:', data);
       // // const response = await axios.post('http://localhost:3000/api/utilisateurs', userData, {
@@ -69,7 +71,10 @@ const SignUpPage = () => {
       
     } catch (error) {
       console.error(error.message);
+      alert('Erreur lors de création de compte',error);
       
+    } finally {
+      setLoading(false); // Fin du chargement
     }
   };
 
@@ -81,15 +86,23 @@ const SignUpPage = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  if (loading) return (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <div className="w-6 h-6 border-4 border-t-4 border-t-transparent border-black rounded-full animate-spin"></div>
+      <span className="ml-2">Chargement...</span>
+    </div>
+    );
+
   return (
-    <div className="flex w-screen h-full bg-gray-100 overflow-hidden flex-col md:flex-row md:items-center">
-    {/* <div className="w-screen h-full flex flex-col md:flex-row md:items-center "> */}
+    <div className="flex w-screen h-full  bg-gray-100 overflow-x-hidden flex-col md:flex-row ">
+    {/* <div className="w-full h-full flex flex-col md:flex-row "> */}
+      <div className="relative h-full w-full  md:w-1/2 ">
       <div 
-        className={`h-full md:h-screen w-full md:w-1/2 bg-cover bg-center bg-fixed flex items-center justify-center ${isMobile ? 'px-6 py-12  overflow-y-scroll' : 'rounded-r-full'}`}
+        className={`h-full  md:h-screen md:fixed  md:w-1/2 bg-cover bg-center bg-fixed flex items-center justify-center ${isMobile ? 'px-6 py-12 overflow-y-scroll' : 'rounded-r-full'}`}
         style={{ backgroundImage: 'url("https://res.cloudinary.com/maecd11/image/upload/v1720176205/maedev/aoh44txcf6vrfxvlj1gu.jpg")' }}
       >
         {isMobile ? (
-          <div className="w-full max-w-lg mx-auto  rounded flex flex-col item-center">
+          <div className="w-full max-w-lg mx-auto p-6 rounded flex flex-col item-center">
             <h2 className="text-2xl mb-4 text-center text-white ">Créer un compte</h2>
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                   <div className="mb-4">
@@ -140,7 +153,9 @@ const SignUpPage = () => {
                       {errors.profileImage && <span className="text-red-500">Ce champ est requis</span>}
                     </div>
                   
-                  <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded">Créer un compte</button>
+                  <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded" disabled={loading}>
+                    Créer un compte
+                  </button>
                 </form>
                 <div className="mt-4">
                   <button className="bg-red-500 hover:bg-red-700 text-white w-full font-bold py-2 px-4 rounded">Se connecter avec Google</button>
@@ -151,9 +166,10 @@ const SignUpPage = () => {
           </div>
         ) : null}
       </div>
+      </div>
 
       {!isMobile && (
-        <div className="w-1/2  h-full flex items-center justify-center  overflow-y-scroll py-12">
+        <div className="w-1/2 h-full flex items-center justify-center px-6 overflow-y-scroll py-12">
           <div className="max-w-lg mx-auto p-6 bg-white rounded shadow flex flex-col align-center ">
           <h2 className="text-2xl mb-4 text-center">Créer un compte</h2>
             <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -205,7 +221,9 @@ const SignUpPage = () => {
                   {errors.profileImage && <span className="text-red-500">Ce champ est requis</span>}
                 </div>
               
-                <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded">Créer un compte</button>
+                <button type="submit" className="bg-gray-200 text-center w-full hover:bg-blue-700 text-gray-700 font-bold py-2 px-4 rounded" disabled={loading}>
+                  Créer un compte
+                </button>
             </form>
             <div className="mt-4">
               <button className="bg-red-500 hover:bg-red-700 text-white w-full font-bold py-2 px-4 rounded">Se connecter avec Google</button>

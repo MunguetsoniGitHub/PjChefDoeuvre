@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; 
 
 const SignUpPage = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const [profileImage, setProfileImage] = useState(null);
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
@@ -66,6 +66,7 @@ const SignUpPage = () => {
       }
       );
       reset();
+      navigate('/login');
       console.log('Utilisateur créé:', response.data);
       alert("Votre compte a été crée avec succès ! Vous pouvez vous connecter, cliquez sur OK pour continuer");
       
